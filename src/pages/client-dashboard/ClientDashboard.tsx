@@ -14,13 +14,13 @@ const PRODUCTS = [
 
   // Carnes y Embutidos
   { id: 9, name: 'Carne Molida 90/10 1kg', price: 6800, image: '', category: 'Carnes y Embutidos', isNew: false },
-  { id: 10, name: 'Pollo Entero 1kg', price: 3200, image: '', category: 'Carnes y Embutidos', isNew: false },
+  { id: 10, name: 'Pollo Entero Asado', price: 3200, image: 'https://tofuu.getjusto.com/orioneat-local/resized2/J5ETmbCkmkPAbxK9G-2400-x.webp', category: 'Carnes y Embutidos', isNew: false },
   { id: 11, name: 'Filete de Pescado Merluza 1kg', price: 5400, image: '', category: 'Carnes y Embutidos', isNew: false },
   { id: 12, name: 'Vienesas Llanquihue 6 unidades', price: 1200, image: '', category: 'Carnes y Embutidos', isNew: false },
   { id: 13, name: 'Jamón de Pierna PF 200g', price: 1500, image: '', category: 'Carnes y Embutidos', isNew: false },
 
   // Frutas
-  { id: 14, name: 'Plátanos 1kg', price: 1300, image: '', category: 'Frutas', isNew: false },
+  { id: 14, name: 'Plátanos 1kg', price: 1300, image: 'https://cdnx.jumpseller.com/maifud/image/41302893/731428A0-B1B4-40A8-9CF0-540967CD7682.jpeg?1722457887', category: 'Frutas', isNew: false },
   { id: 15, name: 'Manzanas Fuji 1kg', price: 1450, image: '', category: 'Frutas', isNew: false },
   { id: 16, name: 'Peras Packham 1kg', price: 1350, image: '', category: 'Frutas', isNew: false },
   { id: 17, name: 'Naranjas 1kg', price: 1100, image: '', category: 'Frutas', isNew: false },
@@ -31,7 +31,7 @@ const PRODUCTS = [
   // Verduras
   { id: 21, name: 'Zanahoria 1kg', price: 1000, image: '', category: 'Verduras', isNew: false },
   { id: 22, name: 'Lechuga Escarola', price: 1200, image: '', category: 'Verduras', isNew: false },
-  { id: 23, name: 'Pimentón Rojo unidad', price: 900, image: '', category: 'Verduras', isNew: false },
+  { id: 23, name: 'Pimentón Rojo unidad', price: 900, image: 'https://media.falabella.com/tottusCL/05014416_1/w=1500,h=1500,fit=pad', category: 'Verduras', isNew: false },
   { id: 24, name: 'Tomates 1kg', price: 1500, image: '', category: 'Verduras', isNew: false },
   { id: 25, name: 'Cebolla Morada 1kg', price: 1100, image: '', category: 'Verduras', isNew: false },
   { id: 26, name: 'Espinaca Bolsa 300g', price: 1500, image: '', category: 'Verduras', isNew: false },
@@ -40,7 +40,7 @@ const PRODUCTS = [
   // Panadería
   { id: 28, name: 'Pan Batido 1kg', price: 1800, image: '', category: 'Panadería', isNew: false },
   { id: 29, name: 'Marraqueta 4 unidades', price: 700, image: '', category: 'Panadería', isNew: false },
-  { id: 30, name: 'Pan Integral Bimbo 500g', price: 1900, image: '', category: 'Panadería', isNew: false },
+  { id: 30, name: 'Pan Integral Bimbo 500g', price: 1900, image: 'https://cdn1.totalcommerce.cloud/mercacentro/product-zoom/es/pan-bimbo-artesano-integral-500-g-1.webp', category: 'Panadería', isNew: false },
   { id: 31, name: 'Croissants rellenos 2 unidades', price: 1500, image: '', category: 'Panadería', isNew: true },
   { id: 32, name: 'Pan de Molde Blanco Ideal', price: 1500, image: '', category: 'Panadería', isNew: false },
 
@@ -53,7 +53,7 @@ const PRODUCTS = [
   { id: 38, name: 'Maní salado 100g', price: 1000, image: '', category: 'Snacks y Galletas', isNew: false },
 
   // Bebidas
-  { id: 39, name: 'Coca-Cola 1.5L', price: 1700, image: '', category: 'Bebidas', isNew: false },
+  { id: 39, name: 'Coca-Cola 1.5L', price: 1700, image: 'https://www.supermercadodiez.cl/image/cache/catalog/productos/7801610001622-500x500.jpg', category: 'Bebidas', isNew: false },
   { id: 40, name: 'Pepsi Zero 1.5L', price: 1600, image: '', category: 'Bebidas', isNew: false },
   { id: 41, name: 'Sprite 1.5L', price: 1600, image: '', category: 'Bebidas', isNew: false },
   { id: 42, name: 'Jugo Andina Durazno 1L', price: 1300, image: '', category: 'Bebidas', isNew: false },
@@ -71,7 +71,7 @@ const PRODUCTS = [
   { id: 52, name: 'Espumante Valdivieso 750ml', price: 4600, image: '', category: 'Licores', isNew: false },
 
   // Despensa
-  { id: 53, name: 'Arroz Tucapel 1kg', price: 1600, image: '', category: 'Despensa', isNew: false },
+  { id: 53, name: 'Arroz Tucapel 1kg', price: 1600, image: 'https://unimarc.vtexassets.com/arquivos/ids/217082/000000000000006126-UN-02.jpg?v=637608388904270000', category: 'Despensa', isNew: false },
   { id: 54, name: 'Fideos Carozzi Spaghetti 400g', price: 950, image: '', category: 'Despensa', isNew: false },
   { id: 55, name: 'Azúcar Iansa 1kg', price: 1300, image: '', category: 'Despensa', isNew: false },
   { id: 56, name: 'Sal Lobos Fina 1kg', price: 600, image: '', category: 'Despensa', isNew: false },
@@ -81,7 +81,7 @@ const PRODUCTS = [
 
   // Congelados
   { id: 60, name: 'Papas Prefritas McCain 1kg', price: 2700, image: '', category: 'Congelados', isNew: false },
-  { id: 61, name: 'Empanadas de queso 6 unid.', price: 3900, image: '', category: 'Congelados', isNew: false },
+  { id: 61, name: 'Empanadas de Jamón y Queso 6 unid.', price: 3900, image: 'https://alimentosdelpedregal.com/la-dehesa/wp-content/uploads/2024/03/EMPANADAS-MEDIALUNA-JAMON-QUESO-6-UN.-DP-450x450.jpg', category: 'Congelados', isNew: false },
   { id: 62, name: 'Pizza Familiar Napolitana', price: 4990, image: '', category: 'Congelados', isNew: false },
   { id: 63, name: 'Mix Verduras Salteadas 500g', price: 2100, image: '', category: 'Congelados', isNew: false },
 
@@ -89,7 +89,7 @@ const PRODUCTS = [
   { id: 64, name: 'Detergente Ariel 3L', price: 5200, image: '', category: 'Limpieza y Hogar', isNew: false },
   { id: 65, name: 'Lavaloza Quix Limón 750ml', price: 1200, image: '', category: 'Limpieza y Hogar', isNew: false },
   { id: 66, name: 'Papel Higiénico Elite 12 rollos', price: 5900, image: '', category: 'Limpieza y Hogar', isNew: false },
-  { id: 67, name: 'Cloro Clorinda 1L', price: 850, image: '', category: 'Limpieza y Hogar', isNew: false },
+  { id: 67, name: 'Cloro Clorinda 1L', price: 850, image: 'https://www.prisa.cl/media/cache/attachment/filter/product_gallery_main/b6b1adc76b36bd6a7f81344215e93277/62682/6321126332f7e424120651.png', category: 'Limpieza y Hogar', isNew: false },
   { id: 68, name: 'Esponja Multiuso 3 unidades', price: 1400, image: '', category: 'Limpieza y Hogar', isNew: false },
 ];
 
