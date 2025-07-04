@@ -7,7 +7,7 @@ const PRODUCTS = [
   { id: 2, name: 'Leche Descremada Soprole 1L', price: 980, image: 'https://santaisabel.vtexassets.com/arquivos/ids/289617/Leche-descremada-natural-1-L.jpg?v=638215704462370000', category: 'Lácteos', isNew: false },
   { id: 3, name: 'Yogur Batido Frutilla Soprole 1kg', price: 2200, image: 'https://unimarc.vtexassets.com/arquivos/ids/222695/000000000401657001-UN-02.jpg?v=637762404859000000', category: 'Lácteos', isNew: false },
   { id: 4, name: 'Yogur Natural Danone 125g', price: 450, image: '/products-san-nicolas/danone.webp', category: 'Lácteos', isNew: false },
-  { id: 5, name: 'Queso Gauda Quillayes 250g', price: 2500, image: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxISEhMSExEWERAWFhISFxcVFRYWFRMVFhYWGBcSGRUYHyghGR0lGxUVITEhJSkrLi4uFx8zODMtNygtMCsBCgoKDg0OGxAQGy0lICUtLS0tLS0tKy8tLS0tLS0tLS0tLS0tLy8vLS0tLS0tLS8tLy0tLi0tLS0tLS0tLS0tLf/AABEIAKEBOQMBEQACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAABAUCAwYBB//EAD4QAAIBAgQEAwUGBAUEAwAAAAECAAMRBBIhMQUTQVEiYXEGMoGRoSNCUrHR8BRyksEzYoKi4QcVc/EWNEP/xAAaAQEAAwEBAQAAAAAAAAAAAAAAAgMEAQUG/8QANREAAgECBAMGBAYDAAMAAAAAAAECAxEEEiExQVFhBRMiMnHwgaGx0UJSkcHh8RQjYgYVM//aAAwDAQACEQMRAD8A+4wBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEA1tWUdRANTYxfMztgQsZxunT990p/wA7AfmRItpbstp0alTyRb9EUmL9ucMu1Uv/AONWI/qsB9ZB1oI2w7KxUt429X+25Y8M4sK6CrScsuxB3U/hI7ycZKSujJXw86E8k0XWHr5h2PUTpQboAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAf/2Q==', category: 'Lácteos', isNew: false },
+  { id: 5, name: 'Queso Gauda Quillayes 250g', price: 2500, image: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxISEhMSExEWERAWFhISFxcVFRYWFRMVFhYWGBcSGRUYHyghGR0lGxUVITEhJSkrLi4uFx8zODMtNygtMCsBCgoKDg0OGxAQGy0lICUtLS0tLS0tKy8tLS0tLS0tLS0tLS0tLy8vLS0tLS0tLS8tLy0tLi0tLS0tLS0tLS0tLf/AABEIAKEBOQMBEQACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAABAUCAwYBB//EAD4QAAIBAgQEAwUGBAUEAwAAAAECAAMRBBIhMQUTQVEiYXEGMoGRoSNCUrHR8BRyksEzYoKi4QcVc/EWNEP/xAAaAQEAAwEBAQAAAAAAAAAAAAAAAgMEAQUG/8QANREAAgECBAMGBAYDAAMAAAAAAAECAxEEEiExQVFhBRMiMnHwgaGx0UJSkcHh8RQjYgYVM//aAAwDAQACEQMRAD8A+4wBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEA1tWUdRANTYxfMztgQsZxunT990p/wA7AfmRItpbstp0alTyRb9EUmL9ucMu1Uv/AONWI/qsB9ZB1oI2w7KxUt429X+25Y8M4sK6CrScsuxB3U/hI7ycZKSujJXw86E8k0XWHr5h2PUTpQboAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAf/2Q==', category: 'Lácteos', isNew: false },
   { id: 6, name: 'Quesillo Colún 300g', price: 2100, image: '', category: 'Lácteos', isNew: false },
   { id: 7, name: 'Mantequilla Soprole con sal 250g', price: 2300, image: '', category: 'Lácteos', isNew: false },
   { id: 8, name: 'Crema para batir Nestlé 200ml', price: 1600, image: '', category: 'Lácteos', isNew: false },
@@ -120,6 +120,7 @@ const ClientDashboard: React.FC = () => {
   const [sort, setSort] = useState<string>('default');
   const [search, setSearch] = useState<string>('');
   const [cart, setCart] = useState<{ id: number; name: string; price: number; quantity: number }[]>([]);
+  const [quantities, setQuantities] = useState<{ [id: number]: number }>({});
 
   // Filtrado y ordenamiento de productos
   const filteredProducts = useMemo(() => {
@@ -146,17 +147,27 @@ const ClientDashboard: React.FC = () => {
     return filtered;
   }, [category, sort, search]);
 
+  const handleQuantityChange = (productId: number, value: number) => {
+    setQuantities(prev => ({
+      ...prev,
+      [productId]: value
+    }));
+  };
+
   const handleAddToCart = (product: { id: number; name: string; price: number }) => {
+    const quantity = quantities[product.id] || 1;
     setCart(prevCart => {
       const existing = prevCart.find(item => item.id === product.id);
       if (existing) {
         return prevCart.map(item =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+          item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
         );
       } else {
-        return [...prevCart, { ...product, quantity: 1 }];
+        return [...prevCart, { ...product, quantity }];
       }
     });
+    // Opcional: resetear a 1 después de agregar
+    setQuantities(prev => ({ ...prev, [product.id]: 1 }));
   };
 
   const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
@@ -223,12 +234,28 @@ const ClientDashboard: React.FC = () => {
         <div className="mt-2 font-bold text-right">
           Total: ${total.toLocaleString()} CLP
         </div>
+        {cart.length > 0 && (
+          <div className="w-full flex justify-end mt-4"> 
+            <a
+              href={`https://wa.me/56948853814?text=${encodeURIComponent(
+                `Hola, quiero comprar:\n` +
+                cart.map(item => `- ${item.name} x${item.quantity} (${(item.price * item.quantity).toLocaleString()} CLP)`).join('\n') +
+                `\nTotal: ${total.toLocaleString()} CLP`
+              )}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block bg-green-500 hover:bg-green-600 !text-white font-bold py-2 px-6 rounded transition"
+            >
+              Comprar
+            </a>
+          </div>
+        )}
       </div>
 
       {/* Grid de productos */}
       <div className="max-w-5xl mx-auto mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-2 pb-10">
         {filteredProducts.map(product => (
-          <div key={product.id} className="bg-white rounded-xl shadow hover:shadow-lg transition p-4 flex flex-col relative">
+          <div key={product.id} className="bg-white rounded-xl shadow hover:shadow-lg transition p-4 flex flex-col justify-between relative h-full">
             {product.isNew && (
               <span className="absolute top-2 left-2 bg-orange-400 text-white text-xs px-2 py-1 rounded-full">Nuevo</span>
             )}
@@ -237,8 +264,21 @@ const ClientDashboard: React.FC = () => {
             <p className="text-green-700 font-bold text-xl mb-2">
               ${product.price.toFixed(0)} CLP
             </p>
+            <div className="mt-auto">
+              <label htmlFor={`quantity-${product.id}`} className="mr-2 text-sm">Cantidad:</label>
+              <select
+                id={`quantity-${product.id}`}
+                className="border rounded px-2 py-1"
+                value={quantities[product.id] || 1}
+                onChange={e => handleQuantityChange(product.id, Number(e.target.value))}
+              >
+                {Array.from({ length: 10 }, (_, i) => i + 1).map(num => (
+                  <option key={num} value={num}>{num}</option>
+                ))}
+              </select>
+            </div>
             <button
-              className="mt-auto bg-green-600 text-white rounded px-4 py-2 hover:bg-green-700 transition font-semibold"
+              className="mt-4 bg-green-600 text-white rounded px-4 py-2 hover:bg-green-700 transition font-semibold"
               onClick={() => handleAddToCart(product)}
             >
               Agregar
