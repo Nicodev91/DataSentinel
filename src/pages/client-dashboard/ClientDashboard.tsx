@@ -185,66 +185,139 @@ const ClientDashboard: React.FC = () => {
     <div className="min-h-screen bg-gray-50">
       {/* Header con enlace de login */}
       <div className="bg-white shadow-sm border-b">
-        <div className="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
-          <div className="text-xl font-bold text-green-700">Supermercado San Nicolás</div>
-          <div className="text-sm text-gray-600 font-bold">Registrate y obtén un 5% de descuento en todas tus compras!</div>
-          <div className="flex items-center gap-4">
-            {isAuthenticated ? (
-              <>
-                <div className="text-sm text-gray-600">
-                  Bienvenido, {user?.name}
-                  {isClient && <span className="ml-2 text-green-600 font-medium">(Cliente con 5% descuento en todas las compras!)</span>}
-                </div>
-                <button 
-                  onClick={logout}
-                  className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
-                >
-                  Cerrar sesión
-                </button>
-              </>
-            ) : (
-              <>
-                <Link 
-                  to="/register" 
-                  className="bg-blue-600 hover:bg-blue-700 text-white! px-4 py-2 rounded-lg font-medium transition-colors"
-                >
-                  Registrarse
-                </Link>
-                <Link 
-                  to="/login" 
-                  className="bg-green-600 hover:bg-green-700 text-white! px-4 py-2 rounded-lg font-medium transition-colors"
-                >
-                  Iniciar sesión
-                </Link>
-              </>
+        <div className="max-w-5xl mx-auto px-4 py-3">
+          {/* Desktop Header */}
+          <div className="hidden md:flex justify-between items-center">
+            <div className="text-xl font-bold text-green-700">Supermercado San Nicolás</div>
+            <div className="text-sm text-gray-600 font-bold">Registrate y obtén un 5% de descuento en todas tus compras!</div>
+            <div className="flex items-center gap-4">
+              {isAuthenticated ? (
+                <>
+                  <div className="text-sm text-gray-600">
+                    Bienvenido, {user?.name}
+                    {isClient && <span className="ml-2 text-green-600 font-medium">(Cliente - 5% descuento)</span>}
+                  </div>
+                  <button 
+                    onClick={logout}
+                    className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                  >
+                    Cerrar sesión
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link 
+                    to="/register" 
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                  >
+                    Registrarse
+                  </Link>
+                  <Link 
+                    to="/login" 
+                    className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                  >
+                    Iniciar sesión
+                  </Link>
+                </>
+              )}
+            </div>
+          </div>
+          
+          {/* Mobile Header */}
+          <div className="md:hidden">
+            <div className="flex justify-between items-center mb-3">
+              <div className="text-lg font-bold text-green-700">Supermercado San Nicolás</div>
+              <div className="flex items-center gap-2">
+                {isAuthenticated ? (
+                  <button 
+                    onClick={logout}
+                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors"
+                  >
+                    Salir
+                  </button>
+                ) : (
+                  <>
+                    <Link 
+                      to="/register" 
+                      className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors"
+                    >
+                      Registrarse
+                    </Link>
+                    <Link 
+                      to="/login" 
+                      className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors"
+                    >
+                      Login
+                    </Link>
+                  </>
+                )}
+              </div>
+            </div>
+            {isAuthenticated && (
+              <div className="text-xs text-gray-600 mb-2">
+                Bienvenido, {user?.name}
+                {isClient && <span className="ml-1 text-green-600 font-medium">(5% descuento)</span>}
+              </div>
             )}
+            <div className="text-xs text-gray-600 text-center">
+              ¡Registrate y obtén un 5% de descuento!
+            </div>
           </div>
         </div>
       </div>
 
       {/* Banner */}
-      <div className="bg-green-700 rounded-xl mx-auto mt-6 max-w-5xl flex items-center justify-between px-8 py-6 text-white">
-        <div>
-          <h2 className="text-2xl font-bold mb-2">Aprovecha <span className="text-yellow-300">los Descuentos y el despacho Gratis</span> que te ofrece Supermercado San Nicolás por compras sobre 25.000 Pesos</h2>
-          <p className="mb-3">Solo por tiempo limitado. Promoción Valida solo para la Ciudad de Ovalle</p>
-          <button className="bg-yellow-400 text-green-900 font-semibold px-4 py-2 rounded hover:bg-yellow-300 transition">Saber más</button>
+      <div className="bg-green-700 rounded-xl mx-auto mt-6 max-w-5xl px-4 md:px-8 py-4 md:py-6 text-white">
+        <div className="text-center md:text-left">
+          <h2 className="text-lg md:text-2xl font-bold mb-2">
+            Aprovecha <span className="text-yellow-300">los Descuentos y el despacho Gratis</span> que te ofrece Supermercado San Nicolás por compras sobre 25.000 Pesos
+          </h2>
+          <p className="mb-3 text-sm md:text-base">Solo por tiempo limitado. Promoción Valida solo para la Ciudad de Ovalle</p>
+          <button className="bg-yellow-400 text-green-900 font-semibold px-4 py-2 rounded hover:bg-yellow-300 transition text-sm md:text-base">
+            Saber más
+          </button>
         </div>
       </div>
 
       {/* Filtros */}
-      <div className="max-w-5xl mx-auto mt-8 flex flex-col md:flex-row md:items-center md:justify-between gap-4 px-2">
-        <div className="flex gap-2 flex-wrap">
-          {CATEGORIES.map(cat => (
-            <button
-              key={cat}
-              className={`px-4 py-2 rounded-full border text-sm font-medium transition ${category === cat ? 'bg-green-600 text-white' : 'bg-white text-gray-700 border-gray-300 hover:bg-green-100'}`}
-              onClick={() => setCategory(cat)}
-            >
-              {cat}
-            </button>
-          ))}
+      <div className="max-w-5xl mx-auto mt-8 px-4 md:px-2">
+        {/* Búsqueda y ordenamiento - Mobile */}
+        <div className="md:hidden mb-4 space-y-2">
+          <input
+            type="text"
+            placeholder="Buscar producto..."
+            className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+          />
+          <select
+            className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
+            value={sort}
+            onChange={e => setSort(e.target.value)}
+          >
+            {SORT_OPTIONS.map(opt => (
+              <option key={opt.value} value={opt.value}>{opt.label}</option>
+            ))}
+          </select>
         </div>
-        <div className="flex gap-2 items-center">
+
+        {/* Categorías */}
+        <div className="mb-4">
+          <div className="flex gap-1 md:gap-2 flex-wrap">
+            {CATEGORIES.map(cat => (
+              <button
+                key={cat}
+                className={`px-2 md:px-4 py-1 md:py-2 rounded-full border text-xs md:text-sm font-medium transition ${category === cat ? 'bg-green-600 text-white' : 'bg-white text-gray-700 border-gray-300 hover:bg-green-100'}`}
+                onClick={() => setCategory(cat)}
+              >
+                {cat}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Búsqueda y ordenamiento - Desktop */}
+        <div className="hidden md:flex gap-2 items-center justify-end">
           <input
             type="text"
             placeholder="Buscar producto..."
@@ -265,45 +338,45 @@ const ClientDashboard: React.FC = () => {
       </div>
 
       {/* Carrito de compras */}
-      <div className="max-w-5xl mx-auto mt-8 mb-4 bg-white rounded shadow p-4">
+      <div className="max-w-5xl mx-auto mt-8 mb-4 bg-white rounded shadow p-4 px-4 md:px-6">
         <h2 className="text-lg font-bold mb-2">Carrito de compras</h2>
         {cart.length === 0 ? (
           <p className="text-gray-500">El carrito está vacío.</p>
         ) : (
-          <ul>
+          <ul className="space-y-2">
             {cart.map(item => (
-              <li key={item.id} className="flex justify-between">
-                <span>{item.name} x{item.quantity}</span>
-                <span>${(item.price * item.quantity).toLocaleString()} CLP</span>
+              <li key={item.id} className="flex justify-between items-center text-sm md:text-base">
+                <span className="flex-1 mr-2">{item.name} x{item.quantity}</span>
+                <span className="font-medium">${(item.price * item.quantity).toLocaleString()} CLP</span>
               </li>
             ))}
           </ul>
         )}
         <div className="mt-4 space-y-1 text-right">
-          <div className="text-gray-600">
+          <div className="text-gray-600 text-sm md:text-base">
             Subtotal: ${subtotal.toLocaleString()} CLP
           </div>
           {discount > 0 && (
-            <div className="text-green-600 font-medium">
+            <div className="text-green-600 font-medium text-sm md:text-base">
               Descuento cliente (5%): -${discount.toLocaleString()} CLP
             </div>
           )}
           {shippingCost > 0 && (
-            <div className="text-orange-600 font-medium">
+            <div className="text-orange-600 font-medium text-sm md:text-base">
               Envío: ${shippingCost.toLocaleString()} CLP
             </div>
           )}
           {shippingCost === 0 && subtotal > 0 && (
-            <div className="text-green-600 font-medium">
+            <div className="text-green-600 font-medium text-sm md:text-base">
               ¡Envío gratis!
             </div>
           )}
-          <div className="font-bold text-lg">
+          <div className="font-bold text-lg md:text-xl">
             Total: ${total.toLocaleString()} CLP
           </div>
         </div>
         {cart.length > 0 && (
-          <div className="w-full flex justify-end mt-4"> 
+          <div className="w-full flex justify-center md:justify-end mt-4"> 
             <a
               href={`https://wa.me/56948853814?text=${encodeURIComponent(
                 `Hola, quiero comprar:\n` +
@@ -315,7 +388,7 @@ const ClientDashboard: React.FC = () => {
               )}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block bg-green-500 hover:bg-green-600 !text-white font-bold py-2 px-6 rounded transition"
+              className="inline-block bg-green-500 hover:bg-green-600 text-white! font-bold py-3 px-8 rounded transition w-full md:w-auto text-center"
             >
               Comprar
             </a>
@@ -324,36 +397,38 @@ const ClientDashboard: React.FC = () => {
       </div>
 
       {/* Grid de productos */}
-      <div className="max-w-5xl mx-auto mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-2 pb-10">
+      <div className="max-w-5xl mx-auto mt-8 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 px-4 md:px-2 pb-10">
         {filteredProducts.map(product => (
-          <div key={product.id} className="bg-white rounded-xl shadow hover:shadow-lg transition p-4 flex flex-col justify-between relative h-full">
+          <div key={product.id} className="bg-white rounded-xl shadow hover:shadow-lg transition p-3 md:p-4 flex flex-col justify-between relative h-full">
             {product.isNew && (
               <span className="absolute top-2 left-2 bg-orange-400 text-white text-xs px-2 py-1 rounded-full">Nuevo</span>
             )}
-            <img src={product.image} alt={product.name} className="w-full h-32 object-contain mb-3" />
-            <h3 className="font-semibold text-lg mb-1 text-gray-800">{product.name}</h3>
-            <p className="text-green-700 font-bold text-xl mb-2">
+            <img src={product.image} alt={product.name} className="w-full h-24 md:h-32 object-contain mb-2 md:mb-3" />
+            <h3 className="font-semibold text-sm md:text-lg mb-1 text-gray-800 line-clamp-2">{product.name}</h3>
+            <p className="text-green-700 font-bold text-lg md:text-xl mb-2">
               ${product.price.toFixed(0)} CLP
             </p>
-            <div className="mt-auto">
-              <label htmlFor={`quantity-${product.id}`} className="mr-2 text-sm">Cantidad:</label>
-              <select
-                id={`quantity-${product.id}`}
-                className="border rounded px-2 py-1"
-                value={quantities[product.id] || 1}
-                onChange={e => handleQuantityChange(product.id, Number(e.target.value))}
+            <div className="mt-auto space-y-2">
+              <div className="flex items-center">
+                <label htmlFor={`quantity-${product.id}`} className="mr-2 text-xs md:text-sm">Cantidad:</label>
+                <select
+                  id={`quantity-${product.id}`}
+                  className="border rounded px-1 md:px-2 py-1 text-xs md:text-sm"
+                  value={quantities[product.id] || 1}
+                  onChange={e => handleQuantityChange(product.id, Number(e.target.value))}
+                >
+                  {Array.from({ length: 10 }, (_, i) => i + 1).map(num => (
+                    <option key={num} value={num}>{num}</option>
+                  ))}
+                </select>
+              </div>
+              <button
+                className="w-full bg-green-600 text-white rounded px-2 md:px-4 py-2 hover:bg-green-700 transition font-semibold text-sm md:text-base"
+                onClick={() => handleAddToCart(product)}
               >
-                {Array.from({ length: 10 }, (_, i) => i + 1).map(num => (
-                  <option key={num} value={num}>{num}</option>
-                ))}
-              </select>
+                Agregar
+              </button>
             </div>
-            <button
-              className="mt-4 bg-green-600 text-white rounded px-4 py-2 hover:bg-green-700 transition font-semibold"
-              onClick={() => handleAddToCart(product)}
-            >
-              Agregar
-            </button>
           </div>
         ))}
         {filteredProducts.length === 0 && (
