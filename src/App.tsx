@@ -6,7 +6,6 @@ import ForgotPassword from './pages/forgot-password/ForgotPassword';
 import VerificationCode from './pages/forgot-password/VerificationCode';
 import Dashboard from './pages/dashboard/Dashboard';
 import ClientDashboard from './pages/client-dashboard/ClientDashboard';
-// import ProtectedRoute from './components/auth/ProtectedRoute';
 
 // Componentes temporales para las páginas que aún no existen
 const TemporaryPage = ({ title }: { title: string }) => (
