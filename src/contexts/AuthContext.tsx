@@ -1,10 +1,14 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import type { ReactNode } from 'react';
 import authService from '../auth-service/AuthLogin';
 
 interface User {
   id: string;
   email: string;
   name: string;
+  rut?: string;
+  address?: string;
+  phone?: string;
   role: string;
 }
 

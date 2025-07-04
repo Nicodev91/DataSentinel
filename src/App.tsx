@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import AdminLayout from './components/layout/AdminLayout';
 import './App.css';
 import Login from './pages/login-page/LoginPage';
+import Register from './pages/register-page/RegisterPage';
 import ForgotPassword from './pages/forgot-password/ForgotPassword';
 import VerificationCode from './pages/forgot-password/VerificationCode';
 import Dashboard from './pages/dashboard/Dashboard';
@@ -26,6 +27,7 @@ function App() {
         
         {/* Auth routes */}
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/verification-code" element={<VerificationCode />} />
         

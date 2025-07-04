@@ -187,12 +187,13 @@ const ClientDashboard: React.FC = () => {
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
           <div className="text-xl font-bold text-green-700">Supermercado San Nicolás</div>
+          <div className="text-sm text-gray-600 font-bold">Registrate y obtén un 5% de descuento en todas tus compras!</div>
           <div className="flex items-center gap-4">
             {isAuthenticated ? (
               <>
                 <div className="text-sm text-gray-600">
                   Bienvenido, {user?.name}
-                  {isClient && <span className="ml-2 text-green-600 font-medium">(Cliente - 5% descuento)</span>}
+                  {isClient && <span className="ml-2 text-green-600 font-medium">(Cliente con 5% descuento en todas las compras!)</span>}
                 </div>
                 <button 
                   onClick={logout}
@@ -202,12 +203,20 @@ const ClientDashboard: React.FC = () => {
                 </button>
               </>
             ) : (
-              <Link 
-                to="/login" 
-                className="bg-green-600 hover:bg-green-700 text-white! px-4 py-2 rounded-lg font-medium transition-colors"
-              >
-                Iniciar sesión
-              </Link>
+              <>
+                <Link 
+                  to="/register" 
+                  className="bg-blue-600 hover:bg-blue-700 text-white! px-4 py-2 rounded-lg font-medium transition-colors"
+                >
+                  Registrarse
+                </Link>
+                <Link 
+                  to="/login" 
+                  className="bg-green-600 hover:bg-green-700 text-white! px-4 py-2 rounded-lg font-medium transition-colors"
+                >
+                  Iniciar sesión
+                </Link>
+              </>
             )}
           </div>
         </div>
