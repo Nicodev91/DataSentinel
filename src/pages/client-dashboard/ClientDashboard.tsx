@@ -1,4 +1,6 @@
 import React, { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 // Datos Temporales de productos
 const PRODUCTS = [
@@ -7,7 +9,7 @@ const PRODUCTS = [
   { id: 2, name: 'Leche Descremada Soprole 1L', price: 980, image: 'https://santaisabel.vtexassets.com/arquivos/ids/289617/Leche-descremada-natural-1-L.jpg?v=638215704462370000', category: 'Lácteos', isNew: false },
   { id: 3, name: 'Yogur Batido Frutilla Soprole 1kg', price: 2200, image: 'https://unimarc.vtexassets.com/arquivos/ids/222695/000000000401657001-UN-02.jpg?v=637762404859000000', category: 'Lácteos', isNew: false },
   { id: 4, name: 'Yogur Natural Danone 125g', price: 450, image: '/products-san-nicolas/danone.webp', category: 'Lácteos', isNew: false },
-  { id: 5, name: 'Queso Gauda Quillayes 250g', price: 2500, image: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxISEhMSExEWERAWFhISFxcVFRYWFRMVFhYWGBcSGRUYHyghGR0lGxUVITEhJSkrLi4uFx8zODMtNygtMCsBCgoKDg0OGxAQGy0lICUtLS0tLS0tKy8tLS0tLS0tLS0tLS0tLy8vLS0tLS0tLS8tLy0tLi0tLS0tLS0tLS0tLf/AABEIAKEBOQMBEQACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAABAUCAwYBB//EAD4QAAIBAgQEAwUGBAUEAwAAAAECAAMRBBIhMQUTQVEiYXEGMoGRoSNCUrHR8BRyksEzYoKi4QcVc/EWNEP/xAAaAQEAAwEBAQAAAAAAAAAAAAAAAgMEAQUG/8QANREAAgECBAMGBAYDAAMAAAAAAAECAxEEEiExQVFhBRMiMnHwgaGx0UJSkcHh8RQjYgYVM//aAAwDAQACEQMRAD8A+4wBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEA1tWUdRANTYxfMztgQsZxunT990p/wA7AfmRItpbstp0alTyRb9EUmL9ucMu1Uv/AONWI/qsB9ZB1oI2w7KxUt429X+25Y8M4sK6CrScsuxB3U/hI7ycZKSujJXw86E8k0XWHr5h2PUTpQboAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAf/2Q==', category: 'Lácteos', isNew: false },
+  { id: 5, name: 'Queso Gauda Quillayes 250g', price: 2500, image: 'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxISEhMSExEWERAWFhISFxcVFRYWFRMVFhYWGBcSGRUYHyghGR0lGxUVITEhJSkrLi4uFx8zODMtNygtMCsBCgoKDg0OGxAQGy0lICUtLS0tLS0tKy8tLS0tLS0tLS0tLS0tLy8vLS0tLS0tLS8tLy0tLi0tLS0tLS0tLS0tLf/AABEIAKEBOQMBEQACEQEDEQH/xAAbAAEAAgMBAQAAAAAAAAAAAAAABAUCAwYBB//EAD4QAAIBAgQEAwUGBAUEAwAAAAECAAMRBBIhMQUTQVEiYXEGMoGRoSNCUrHR8BRyksEzYoKi4QcVc/EWNEP/xAAaAQEAAwEBAQAAAAAAAAAAAAAAAgMEAQUG/8QANREAAgECBAMGBAYDAAMAAAAAAAECAxEEEiExQVFhBRMiMnHwgaGx0UJSkcHh8RQjYgYVM//aAAwDAQACEQMRAD8A+4wBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEAQBAEA1tWUdRANTYxfMztgQsZxunT990p/wA7AfmRItpbstp0alTyRb9EUmL9ucMu1Uv/AONWI/qsB9ZB1oI2w7KxUt429X+25Y8M4sK6CrScsuxB3U/hI7ycZKSujJXw86E8k0XWHr5h2PUTpQboAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAIAgCAf/2Q==', category: 'Lácteos', isNew: false },
   { id: 6, name: 'Quesillo Colún 300g', price: 2100, image: '', category: 'Lácteos', isNew: false },
   { id: 7, name: 'Mantequilla Soprole con sal 250g', price: 2300, image: '', category: 'Lácteos', isNew: false },
   { id: 8, name: 'Crema para batir Nestlé 200ml', price: 1600, image: '', category: 'Lácteos', isNew: false },
@@ -116,6 +118,7 @@ const SORT_OPTIONS = [
 ];
 
 const ClientDashboard: React.FC = () => {
+  const { isAuthenticated, isClient, user, logout } = useAuth();
   const [category, setCategory] = useState<string>('Todos');
   const [sort, setSort] = useState<string>('default');
   const [search, setSearch] = useState<string>('');
@@ -170,10 +173,46 @@ const ClientDashboard: React.FC = () => {
     setQuantities(prev => ({ ...prev, [product.id]: 1 }));
   };
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const shippingCost = subtotal < 25000 ? 5000 : 0;
+  
+  // Aplicar descuento del 5% solo para clientes logueados
+  const discount = isClient ? subtotal * 0.05 : 0;
+  const totalAfterDiscount = subtotal - discount;
+  const total = totalAfterDiscount + shippingCost;
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Header con enlace de login */}
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-5xl mx-auto px-4 py-3 flex justify-between items-center">
+          <div className="text-xl font-bold text-green-700">Supermercado San Nicolás</div>
+          <div className="flex items-center gap-4">
+            {isAuthenticated ? (
+              <>
+                <div className="text-sm text-gray-600">
+                  Bienvenido, {user?.name}
+                  {isClient && <span className="ml-2 text-green-600 font-medium">(Cliente - 5% descuento)</span>}
+                </div>
+                <button 
+                  onClick={logout}
+                  className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                >
+                  Cerrar sesión
+                </button>
+              </>
+            ) : (
+              <Link 
+                to="/login" 
+                className="bg-green-600 hover:bg-green-700 text-white! px-4 py-2 rounded-lg font-medium transition-colors"
+              >
+                Iniciar sesión
+              </Link>
+            )}
+          </div>
+        </div>
+      </div>
+
       {/* Banner */}
       <div className="bg-green-700 rounded-xl mx-auto mt-6 max-w-5xl flex items-center justify-between px-8 py-6 text-white">
         <div>
@@ -231,8 +270,28 @@ const ClientDashboard: React.FC = () => {
             ))}
           </ul>
         )}
-        <div className="mt-2 font-bold text-right">
-          Total: ${total.toLocaleString()} CLP
+        <div className="mt-4 space-y-1 text-right">
+          <div className="text-gray-600">
+            Subtotal: ${subtotal.toLocaleString()} CLP
+          </div>
+          {discount > 0 && (
+            <div className="text-green-600 font-medium">
+              Descuento cliente (5%): -${discount.toLocaleString()} CLP
+            </div>
+          )}
+          {shippingCost > 0 && (
+            <div className="text-orange-600 font-medium">
+              Envío: ${shippingCost.toLocaleString()} CLP
+            </div>
+          )}
+          {shippingCost === 0 && subtotal > 0 && (
+            <div className="text-green-600 font-medium">
+              ¡Envío gratis!
+            </div>
+          )}
+          <div className="font-bold text-lg">
+            Total: ${total.toLocaleString()} CLP
+          </div>
         </div>
         {cart.length > 0 && (
           <div className="w-full flex justify-end mt-4"> 
@@ -240,6 +299,9 @@ const ClientDashboard: React.FC = () => {
               href={`https://wa.me/56948853814?text=${encodeURIComponent(
                 `Hola, quiero comprar:\n` +
                 cart.map(item => `- ${item.name} x${item.quantity} (${(item.price * item.quantity).toLocaleString()} CLP)`).join('\n') +
+                `\nSubtotal: ${subtotal.toLocaleString()} CLP` +
+                (discount > 0 ? `\nDescuento cliente (5%): -${discount.toLocaleString()} CLP` : '') +
+                (shippingCost > 0 ? `\nEnvío: ${shippingCost.toLocaleString()} CLP` : '\n¡Envío gratis!') +
                 `\nTotal: ${total.toLocaleString()} CLP`
               )}`}
               target="_blank"

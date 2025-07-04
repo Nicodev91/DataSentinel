@@ -5,9 +5,11 @@ import InputComponent from "../../components/common/ui/input/Input";
 import FormComponent from "../../components/common/ui/form/Form";
 import Toast from "../../components/common/ui/toast/Toast";
 import Utils from "../../utils/Utils";
+import { useAuth } from "../../contexts/AuthContext";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { login } = useAuth();
   
   const [toastMessage, setToastMessage] = useState("");
   const [toastType, setToastType] = useState<'success' | 'error'>('success'); 
@@ -41,9 +43,21 @@ const LoginPage = () => {
       return;
     }
 
+    // Simular datos de usuario basados en el email
+    const userRole = email.toLowerCase().includes("admin") ? "admin" : "client";
+    const userData = {
+      id: "1",
+      email: email,
+      name: email.split("@")[0],
+      role: userRole
+    };
+    
+    // Actualizar el contexto de autenticación
+    login(userData);
+    
     showToast("¡Inicio de sesión exitoso! Redirigiendo...", "success");
     setTimeout(() => {
-      if (email.toLowerCase().includes("admin")) {
+      if (userRole === "admin") {
         navigate("/admin/dashboard");
       } else {
         navigate("/client/dashboard");

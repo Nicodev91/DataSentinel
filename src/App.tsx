@@ -6,6 +6,7 @@ import ForgotPassword from './pages/forgot-password/ForgotPassword';
 import VerificationCode from './pages/forgot-password/VerificationCode';
 import Dashboard from './pages/dashboard/Dashboard';
 import ClientDashboard from './pages/client-dashboard/ClientDashboard';
+import { AuthProvider } from './contexts/AuthContext';
 
 // Componentes temporales para las páginas que aún no existen
 const TemporaryPage = ({ title }: { title: string }) => (
@@ -17,10 +18,11 @@ const TemporaryPage = ({ title }: { title: string }) => (
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/* Redirect from root to login */}
-        <Route path="/" element={<Navigate to="/login" replace />} />
+    <AuthProvider>
+      <Router>
+        <Routes>
+        {/* Redirect from root to client dashboard */}
+        <Route path="/" element={<Navigate to="/client/dashboard" replace />} />
         
         {/* Auth routes */}
         <Route path="/login" element={<Login />} />
@@ -38,7 +40,8 @@ function App() {
         {/* Client dashboard route */}
         <Route path="/client/dashboard" element={<ClientDashboard />} />
       </Routes>
-    </Router>
+      </Router>
+    </AuthProvider>
   );
 }
 
