@@ -8,9 +8,6 @@ const Banner: React.FC = () => {
           Aprovecha <span className="text-yellow-300">los Descuentos y el despacho Gratis</span> que te ofrece Supermercado San Nicolás por compras sobre 25.000 Pesos
         </h2>
         <p className="mb-3 text-sm md:text-base">Solo por tiempo limitado. Promoción Valida solo para la Ciudad de Ovalle</p>
-        <button className="bg-yellow-400 text-green-900 font-semibold px-4 py-2 rounded hover:bg-yellow-300 transition text-sm md:text-base">
-          Saber más
-        </button>
       </div>
     </div>
   );
