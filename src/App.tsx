@@ -7,6 +7,7 @@ import ForgotPassword from './pages/forgot-password/ForgotPassword';
 import VerificationCode from './pages/forgot-password/VerificationCode';
 import Dashboard from './pages/dashboard/Dashboard';
 import ClientDashboard from './pages/client-dashboard/ClientDashboard';
+import ProductDetail from './pages/product-detail/ProductDetail';
 import { AuthProvider } from './contexts/AuthContext';
 
 // Componentes temporales para las páginas que aún no existen
@@ -39,8 +40,10 @@ function App() {
           <Route path="orders" element={<TemporaryPage title="Gestión de Pedidos" />} />
           <Route path="settings" element={<TemporaryPage title="Configuración" />} />
         </Route>
-        {/* Client dashboard route */}
+        
+        {/* Client routes */}
         <Route path="/client/dashboard" element={<ClientDashboard />} />
+        <Route path="/product/:id" element={<ProductDetail />} />
       </Routes>
       </Router>
     </AuthProvider>
