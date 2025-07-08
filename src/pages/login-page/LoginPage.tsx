@@ -93,7 +93,7 @@ const LoginPage = () => {
       <div className="min-h-screen flex flex-col md:flex-row">
         <div className="w-full h-1/2 md:h-screen md:w-1/2">
           <img
-            src="./SupermarketImage.jpg"
+            src="./MarketImage.jpg"
             alt="background-image"
             className="w-full h-full object-cover"
           />
@@ -154,6 +154,12 @@ const LoginPage = () => {
               >
                 {isLoginLoading ? "Iniciando sesión..." : "Iniciar Sesión"}
               </ButtonComponent>
+              
+              <div className="flex justify-center mt-4">
+                <Link to="/client/dashboard" className="text-sm text-forgetpassword hover:underline cursor-pointer">
+                  ¿Ir al Dashboard de Cliente?
+                </Link>
+              </div>
             </FormComponent>
           </div>
         </div>
