@@ -157,7 +157,7 @@ const LoginPage = () => {
               
               <div className="flex justify-center mt-4">
                 <Link to="/client/dashboard" className="text-sm text-forgetpassword hover:underline cursor-pointer">
-                  ¿Ir al Dashboard de Cliente?
+                  Volver a la página de compras
                 </Link>
               </div>
             </FormComponent>
