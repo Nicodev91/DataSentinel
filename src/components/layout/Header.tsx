@@ -12,7 +12,7 @@ const Header: React.FC<HeaderProps> = ({
   toggleSidebar, 
   toggleMobileSidebar, 
   sidebarCollapsed = false, 
-  userType = 'admin' 
+  //userType = 'admin' 
 }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
