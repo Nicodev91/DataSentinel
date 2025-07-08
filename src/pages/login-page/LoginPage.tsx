@@ -32,38 +32,44 @@ const LoginPage = () => {
     setIsToastVisible(false);
   };
 
+  // En la función handleLogin, después del login exitoso:
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoginLoading(true);
-
+  
     // Validación simple local
     if (!email || !password) {
       showToast("Por favor, ingresa tu correo y contraseña.", "error");
       setIsLoginLoading(false);
       return;
     }
-
+  
     // Simular datos de usuario basados en el email
     const userRole = email.toLowerCase().includes("admin") ? "admin" : "client";
     const userData = {
       id: "1",
       email: email,
-      name: email.split("@")[0],
+      name: email.split('@')[0],
       role: userRole
     };
-    
-    // Actualizar el contexto de autenticación
-    login(userData);
-    
-    showToast("¡Inicio de sesión exitoso! Redirigiendo...", "success");
-    setTimeout(() => {
-      if (userRole === "admin") {
-        navigate("/admin/dashboard");
-      } else {
-        navigate("/client/dashboard");
-      }
-    }, 1500);
-    setIsLoginLoading(false);
+  
+    try {
+      login(userData);
+      showToast(`Bienvenido ${userData.name}`, "success");
+      
+      // Redirigir según el rol del usuario
+      setTimeout(() => {
+        if (userRole === 'admin') {
+          navigate('/admin/dashboard');
+        } else {
+          navigate('/client/dashboard');
+        }
+      }, 1000);
+    } catch (error) {
+      showToast("Error al iniciar sesión", "error");
+    } finally {
+      setIsLoginLoading(false);
+    }
   };
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {

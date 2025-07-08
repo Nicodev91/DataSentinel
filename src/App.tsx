@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import AdminLayout from './components/layout/AdminLayout';
+import ClientLayout from './components/layout/ClientLayout';
+import ProtectedRoute from './components/auth/ProtectedRoute';
 import './App.css';
 import Login from './pages/login-page/LoginPage';
 import Register from './pages/register-page/RegisterPage';
@@ -23,28 +25,42 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-        {/* Redirect from root to client dashboard */}
-        <Route path="/" element={<Navigate to="/client/dashboard" replace />} />
-        
-        {/* Auth routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path="/verification-code" element={<VerificationCode />} />
-        
-        {/* Admin routes */}
-        <Route path="/admin" element={<AdminLayout />}>
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="users" element={<TemporaryPage title="Gestión de Usuarios" />} />
-          <Route path="products" element={<TemporaryPage title="Gestión de Productos" />} />
-          <Route path="orders" element={<TemporaryPage title="Gestión de Pedidos" />} />
-          <Route path="settings" element={<TemporaryPage title="Configuración" />} />
-        </Route>
-        
-        {/* Client routes */}
-        <Route path="/client/dashboard" element={<ClientDashboard />} />
-        <Route path="/product/:id" element={<ProductDetail />} />
-      </Routes>
+          {/* Redirect from root based on authentication */}
+          <Route path="/" element={<Navigate to="/login" replace />} />
+          
+          {/* Auth routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path="/verification-code" element={<VerificationCode />} />
+          
+          {/* Admin routes - Solo para usuarios admin */}
+          <Route path="/admin" element={
+            <ProtectedRoute requiredRole="admin">
+              <AdminLayout />
+            </ProtectedRoute>
+          }>
+            <Route path="dashboard" element={<Dashboard />} />
+            <Route path="users" element={<TemporaryPage title="Gestión de Usuarios" />} />
+            <Route path="products" element={<TemporaryPage title="Gestión de Productos" />} />
+            <Route path="orders" element={<TemporaryPage title="Gestión de Pedidos" />} />
+            <Route path="settings" element={<TemporaryPage title="Configuración" />} />
+          </Route>
+          
+          {/* Client routes - Solo para usuarios client */}
+          <Route path="/client/dashboard" element={
+            <ProtectedRoute requiredRole="client">
+              <ClientDashboard />
+            </ProtectedRoute>
+          } />
+          
+          {/* Product detail - Accesible para usuarios autenticados */}
+          <Route path="/product/:id" element={
+            <ProtectedRoute>
+              <ProductDetail />
+            </ProtectedRoute>
+          } />
+        </Routes>
       </Router>
     </AuthProvider>
   );

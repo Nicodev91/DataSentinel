@@ -1,34 +1,33 @@
 import React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
-import authService from '../../auth-service/AuthLogin';
+import { Navigate } from 'react-router-dom';
+import { useAuth } from '../../contexts/AuthContext';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  requiredRole?: string;
+  requiredRole?: 'admin' | 'client';
+  redirectTo?: string;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ 
   children, 
-  requiredRole 
+  requiredRole, 
+  redirectTo = '/login' 
 }) => {
-  const location = useLocation();
-  
-  // Verificar si el usuario está autenticado
-  if (!authService.isAuthenticated()) {
-    // Redirigir al login y guardar la ubicación actual para redirigir después
-    return <Navigate to="/login" state={{ from: location }} replace />;
+  const { isAuthenticated, user } = useAuth();
+
+  // Si no está autenticado, redirigir al login
+  if (!isAuthenticated) {
+    return <Navigate to={redirectTo} replace />;
   }
 
-  // Verificar rol si se especifica
-  if (requiredRole) {
-    const user = authService.getUser();
-    if (!user || user.role !== requiredRole) {
-      // Redirigir a una página de acceso denegado o dashboard
-      return <Navigate to="/admin/dashboard" replace />;
-    }
+  // Si se requiere un rol específico y el usuario no lo tiene
+  if (requiredRole && user?.role !== requiredRole) {
+    // Redirigir según el rol del usuario
+    const userRedirect = user?.role === 'admin' ? '/admin/dashboard' : '/client/dashboard';
+    return <Navigate to={userRedirect} replace />;
   }
 
   return <>{children}</>;
 };
 
-export default ProtectedRoute; 
+export default ProtectedRoute;
