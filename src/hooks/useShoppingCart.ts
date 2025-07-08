@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Product, CartItem } from '../data/products';
+import type { Product, CartItem } from '../data/products';
 
 export const useShoppingCart = () => {
   const [cart, setCart] = useState<CartItem[]>([]);
@@ -58,4 +58,4 @@ export const useShoppingCart = () => {
     removeFromCart,
     updateCartItemQuantity
   };
-}; 
+};

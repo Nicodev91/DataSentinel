@@ -1,6 +1,6 @@
 import React from 'react';
 import ProductCard from './ProductCard';
-import { Product } from '../../data/products';
+import type { Product } from '../../data/products';
 
 interface ProductGridProps {
   products: Product[];
@@ -33,4 +33,4 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   );
 };
 
-export default ProductGrid; 
+export default ProductGrid;

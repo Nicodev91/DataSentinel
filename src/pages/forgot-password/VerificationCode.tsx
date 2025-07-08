@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import ButtonComponent from "../../components/common/ui/button/Button";
 import InputComponent from "../../components/common/ui/input/Input";
 import FormComponent from "../../components/common/ui/form/Form";
@@ -10,7 +10,8 @@ import verificationService from "../../auth-service/AuthVerificationCode";
 const EmptyString = "";
 
 const VerificationCode = () => {
-  const navigate = useNavigate();
+  // Eliminar esta línea si navigate no se usa en el componente
+  // const navigate = useNavigate();
   const [code, setCode] = useState(EmptyString);
   const [email, setEmail] = useState(""); 
   const [isLoading, setIsLoading] = useState(false);

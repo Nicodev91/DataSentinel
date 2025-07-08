@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import { CartItem } from '../../data/products';
+import type { CartItem } from '../../data/products';
 
 interface ShoppingCartProps {
   cart: CartItem[];
@@ -78,4 +78,4 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({ cart }) => {
   );
 };
 
-export default ShoppingCart; 
+export default ShoppingCart;

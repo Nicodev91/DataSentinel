@@ -3,7 +3,7 @@ import showPasswordSvg from '../../../../assets/showPassword.svg';
 import hidePasswordSvg from '../../../../assets/hidePassword.svg';
 
 interface InputProps {
-  type?: "text" | "email" | "password";
+  type?: "text" | "email" | "password" | "tel";
   id: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

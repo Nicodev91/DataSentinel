@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
-import { PRODUCTS, Product } from '../data/products';
+import { PRODUCTS } from '../data/products';
+import type { Product } from '../data/products';
 
 export const useProductFilters = (
   category: string,
@@ -7,7 +8,7 @@ export const useProductFilters = (
   search: string
 ) => {
   const filteredProducts = useMemo(() => {
-    let filtered = PRODUCTS.filter(p =>
+    let filtered = PRODUCTS.filter((p: Product) =>
       (category === 'Todos' || p.category === category) &&
       p.name.toLowerCase().includes(search.toLowerCase())
     );
@@ -33,4 +34,4 @@ export const useProductFilters = (
   }, [category, sort, search]);
 
   return filteredProducts;
-}; 
+};

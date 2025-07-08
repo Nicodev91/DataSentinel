@@ -2,48 +2,43 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './Sidebar.css';
 
-interface SidebarProps {
-  collapsed: boolean;
+interface MenuItem {
+  name: string;
+  path: string;
+  icon: string;
 }
 
-const Sidebar: React.FC<SidebarProps> = ({ collapsed }) => {
+interface SidebarProps {
+  collapsed?: boolean;
+  menuItems?: MenuItem[];
+  userType?: string;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ collapsed = false, menuItems = [], userType = 'admin' }) => {
   return (
     <div className={`sidebar ${collapsed ? 'collapsed' : ''}`}>
       <div className="sidebar-logo">
-        <h2>Admin Panel</h2>
+        <h2>{userType === 'client' ? 'Cliente' : 'Admin Panel'}</h2>
       </div>
       <nav className="sidebar-nav">
         <ul>
-          <li>
-            <NavLink to="/dashboard" className={({isActive}) => isActive ? 'active' : ''}>
-              <i className="fas fa-home"></i>
-              <span>Dashboard</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/users" className={({isActive}) => isActive ? 'active' : ''}>
-              <i className="fas fa-users"></i>
-              <span>Usuarios</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/products" className={({isActive}) => isActive ? 'active' : ''}>
-              <i className="fas fa-box"></i>
-              <span>Productos</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/orders" className={({isActive}) => isActive ? 'active' : ''}>
-              <i className="fas fa-shopping-cart"></i>
-              <span>Pedidos</span>
-            </NavLink>
-          </li>
-          <li>
-            <NavLink to="/settings" className={({isActive}) => isActive ? 'active' : ''}>
-              <i className="fas fa-cog"></i>
-              <span>Configuración</span>
-            </NavLink>
-          </li>
+          {menuItems.length > 0 ? (
+            menuItems.map((item, index) => (
+              <li key={index}>
+                <NavLink to={item.path} className={({isActive}) => isActive ? 'active' : ''}>
+                  <i className={`fas ${item.icon}`}></i>
+                  <span>{item.name}</span>
+                </NavLink>
+              </li>
+            ))
+          ) : (
+            <li>
+              <NavLink to="/dashboard" className={({isActive}) => isActive ? 'active' : ''}>
+                <i className="fas fa-home"></i>
+                <span>Dashboard</span>
+              </NavLink>
+            </li>
+          )}
         </ul>
       </nav>
     </div>

@@ -2,17 +2,22 @@ import React, { useState } from 'react';
 import './Header.css';
 
 interface HeaderProps {
-  toggleSidebar: () => void;
-  toggleMobileSidebar: () => void;
-  sidebarCollapsed: boolean;
+  toggleSidebar?: () => void;
+  toggleMobileSidebar?: () => void;
+  sidebarCollapsed?: boolean;
+  userType?: string;
 }
 
-const Header: React.FC<HeaderProps> = ({ toggleSidebar, toggleMobileSidebar, sidebarCollapsed }) => {
+const Header: React.FC<HeaderProps> = ({ 
+  toggleSidebar, 
+  toggleMobileSidebar, 
+  sidebarCollapsed = false, 
+  userType = 'admin' 
+}) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    // Implementar lógica de búsqueda aquí
     console.log('Buscando:', searchQuery);
   };
 

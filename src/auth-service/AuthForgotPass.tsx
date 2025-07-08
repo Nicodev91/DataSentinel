@@ -23,8 +23,8 @@ class ForgotPasswordService {
         return { 
           success: true, 
           message: 'Código de verificación enviado exitosamente', 
-          email: response.data.email,
-          expiresIn: response.data.expiresIn
+          email: (response.data as { email?: string }).email || email,
+          expiresIn: (response.data as { expiresIn?: number }).expiresIn || 300
         };
       } else {
         return { 
@@ -50,4 +50,4 @@ class ForgotPasswordService {
   }
 }
 
-export default new ForgotPasswordService(); 
+export default new ForgotPasswordService();
