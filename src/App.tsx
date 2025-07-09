@@ -25,8 +25,8 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-          {/* Redirect from root based on authentication */}
-          <Route path="/" element={<Navigate to="/login" replace />} />
+          {/* Redirect from root to client dashboard */}
+          <Route path="/" element={<Navigate to="/client/dashboard" replace />} />
           
           {/* Auth routes */}
           <Route path="/login" element={<Login />} />
@@ -48,18 +48,10 @@ function App() {
           </Route>
           
           {/* Client routes - Solo para usuarios client */}
-          <Route path="/client/dashboard" element={
-            <ProtectedRoute requiredRole="client">
-              <ClientDashboard />
-            </ProtectedRoute>
-          } />
+          <Route path="/client/dashboard" element={<ClientDashboard />} />
           
           {/* Product detail - Accesible para usuarios autenticados */}
-          <Route path="/product/:id" element={
-            <ProtectedRoute>
-              <ProductDetail />
-            </ProtectedRoute>
-          } />
+          <Route path="/product/:id" element={<ProductDetail />} />
         </Routes>
       </Router>
     </AuthProvider>
