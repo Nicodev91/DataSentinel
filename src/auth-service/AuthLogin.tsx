@@ -16,7 +16,7 @@ export interface LoginResponse {
   error?: string;
 }
 
-const API_URL = 'https://back-office-backend-six.vercel.app/v1';
+const API_URL = 'https://backend-data-sentinel.vercel.app/v1';
 
 // Función para establecer cookies seguras
 const setSecureCookie = (name: string, value: string, days: number = 7) => {
@@ -48,6 +48,21 @@ const removeCookie = (name: string) => {
   document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
 };
 
+// Función para decodificar JWT (solo la parte payload)
+const decodeJWT = (token: string) => {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+      return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+    return JSON.parse(jsonPayload);
+  } catch (error) {
+    console.error('Error decodificando JWT:', error);
+    return null;
+  }
+};
+
 class SecureAuthService {
   async login(credentials: LoginCredentials): Promise<LoginResponse> {
     try {
@@ -55,8 +70,12 @@ class SecureAuthService {
       
       const response = await fetch(`${API_URL}/auth/login`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        credentials: 'include', // Incluye cookies en la petición
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        // Remover credentials temporalmente si hay problemas de CORS
+        // credentials: 'include',
         body: JSON.stringify(credentials)
       });
       
@@ -66,14 +85,27 @@ class SecureAuthService {
       console.log("Datos de respuesta:", data);
       
       if (response.ok && data.access_token) {
+        // Decodificar JWT para obtener información del usuario
+        const decodedToken = decodeJWT(data.access_token);
+        console.log('Token decodificado:', decodedToken);
+        
         // Almacenar token en cookie HttpOnly segura
         setSecureCookie('auth_token', data.access_token, 7);
         
-        // Almacenar información del usuario en sessionStorage (menos sensible)
-        sessionStorage.setItem('user', JSON.stringify(data.user));
+        // Crear objeto de usuario desde el token o usar valores por defecto
+        const user = {
+          id: decodedToken?.sub?.toString() || decodedToken?.userId?.toString() || "1",
+          email: decodedToken?.email || credentials.email,
+          name: decodedToken?.name || decodedToken?.username || credentials.email.split('@')[0],
+          role: decodedToken?.role || "client" // Siempre asignar rol 'client' por defecto
+        };
+        
+        // Almacenar información del usuario en sessionStorage
+        sessionStorage.setItem('user', JSON.stringify(user));
         
         console.log("Login exitoso, token almacenado");
-        return { success: true, token: data.access_token, user: data.user };
+        console.log("Usuario creado:", user);
+        return { success: true, token: data.access_token, user };
       } else {
         console.log("Login fallido:", data.error || 'Credenciales inválidas');
         return { success: false, error: data.error || 'Credenciales inválidas' };

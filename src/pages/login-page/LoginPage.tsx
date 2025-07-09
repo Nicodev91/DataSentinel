@@ -6,6 +6,7 @@ import FormComponent from "../../components/common/ui/form/Form";
 import Toast from "../../components/common/ui/toast/Toast";
 import Utils from "../../utils/Utils";
 import { useAuth } from "../../contexts/AuthContext";
+import authService from "../../auth-service/AuthLogin";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const LoginPage = () => {
   };
 
   // En la función handleLogin, después del login exitoso:
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoginLoading(true);
   
@@ -44,29 +45,30 @@ const LoginPage = () => {
       return;
     }
   
-    // Simular datos de usuario basados en el email
-    const userRole = email.toLowerCase().includes("admin") ? "admin" : "client";
-    const userData = {
-      id: "1",
-      email: email,
-      name: email.split('@')[0],
-      role: userRole
-    };
-  
     try {
-      login(userData);
-      showToast(`Bienvenido ${userData.name}`, "success");
+      // Usar el servicio real de autenticación
+      const response = await authService.login({ email, password });
       
-      // Redirigir según el rol del usuario
-      setTimeout(() => {
-        if (userRole === 'admin') {
-          navigate('/admin/dashboard');
-        } else {
-          navigate('/client/dashboard');
-        }
-      }, 1000);
+      if (response.success && response.user) {
+        // Login exitoso
+        login(response.user);
+        showToast(`Bienvenido ${response.user.name}`, "success");
+        
+        // Redirigir según el rol del usuario
+        setTimeout(() => {
+          if (response.user?.role === 'admin') {
+            navigate('/admin/dashboard');
+          } else {
+            navigate('/client/dashboard');
+          }
+        }, 1000);
+      } else {
+        // Login fallido
+        showToast(response.error || "Credenciales inválidas", "error");
+      }
     } catch (error) {
-      showToast("Error al iniciar sesión", "error");
+      console.error('Error en login:', error);
+      showToast("Error de conexión con el servidor", "error");
     } finally {
       setIsLoginLoading(false);
     }
