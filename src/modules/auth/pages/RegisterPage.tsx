@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import ButtonComponent from "../../../components/common/ui/button/Button";
-import InputComponent from "../../../components/common/ui/input/Input";
-import FormComponent from "../../../components/common/ui/form/Form";
-import Toast from "../../../components/common/ui/toast/Toast";
+import { ButtonComponent, InputComponent, FormComponent, Toast } from "../../../shared/components";
 import Utils from "../../../utils/Utils";
 import { useAuth } from "../contexts/AuthContext";
 
