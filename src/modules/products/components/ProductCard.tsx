@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { Product } from '../../modules/products';
+import type { Product } from '../domain/Product';
+import Button from '../../core/components/ui/Button';
 
 interface ProductCardProps {
   product: Product;
@@ -59,18 +60,21 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
         
         <div className="flex space-x-2">
-          <button
-            className="flex-1 bg-green-600 text-white rounded px-2 md:px-4 py-2 hover:bg-green-700 transition font-semibold text-xs md:text-sm"
+          <Button
+            variant="primary"
+            size="sm"
+            className="flex-1"
             onClick={() => onAddToCart(product)}
           >
             Agregar
-          </button>
-          <button
+          </Button>
+          <Button
+            variant="secondary"
+            size="sm"
             onClick={() => navigate(`/product/${product.id}`)}
-            className="bg-gray-200 text-gray-700 rounded px-2 md:px-3 py-2 hover:bg-gray-300 transition text-xs md:text-sm"
           >
             Ver
-          </button>
+          </Button>
         </div>
       </div>
     </div>

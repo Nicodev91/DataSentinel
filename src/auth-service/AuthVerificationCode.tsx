@@ -38,7 +38,8 @@ class VerificationCodeService {
           error: data.message || 'Código inválido'
         };
       }
-    } catch (error) {
+    } catch (error: unknown) {
+      console.error('OTP verification error:', error);
       return { 
         success: false, 
         error: 'Error de conexión con el servidor'
@@ -53,4 +54,4 @@ class VerificationCodeService {
 }
 
 // Exportar instancia
-export default new VerificationCodeService(); 
+export default new VerificationCodeService();

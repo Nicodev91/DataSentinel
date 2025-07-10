@@ -1,5 +1,5 @@
 import React from 'react';
-import { CATEGORIES, SORT_OPTIONS } from '../../data/products';
+import { CATEGORIES, SORT_OPTIONS } from '../../modules/products';
 
 interface FiltersProps {
   category: string;
@@ -78,4 +78,4 @@ const Filters: React.FC<FiltersProps> = ({
   );
 };
 
-export default Filters; 
+export default Filters;

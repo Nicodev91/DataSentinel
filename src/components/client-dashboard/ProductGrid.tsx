@@ -1,6 +1,6 @@
 import React from 'react';
 import ProductCard from './ProductCard';
-import type { Product } from '../../data/products';
+import type { Product } from '../../modules/products';
 
 interface ProductGridProps {
   products: Product[];

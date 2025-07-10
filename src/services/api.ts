@@ -1,8 +1,8 @@
-import authService from '../auth-service/AuthLogin';
+import { authService } from '../modules/auth';
 
 const API_URL = 'https://back-office-backend-six.vercel.app/v1';
 
-interface ApiResponse<T = any> {
+interface ApiResponse<T = unknown> {
   data?: T;
   error?: string;
   status: number;
@@ -69,7 +69,8 @@ class ApiService {
         data,
         status: response.status,
       };
-    } catch (error) {
+    } catch (error: unknown) {
+      console.error('API request failed:', error);
       return {
         error: 'Error de conexión',
         status: 500,
@@ -82,14 +83,14 @@ class ApiService {
     return this.makeRequest<T>(endpoint, { method: 'GET' });
   }
 
-  async post<T>(endpoint: string, body?: any): Promise<ApiResponse<T>> {
+  async post<T>(endpoint: string, body?: unknown): Promise<ApiResponse<T>> {
     return this.makeRequest<T>(endpoint, {
       method: 'POST',
       body: body ? JSON.stringify(body) : undefined,
     });
   }
 
-  async put<T>(endpoint: string, body?: any): Promise<ApiResponse<T>> {
+  async put<T>(endpoint: string, body?: unknown): Promise<ApiResponse<T>> {
     return this.makeRequest<T>(endpoint, {
       method: 'PUT',
       body: body ? JSON.stringify(body) : undefined,
@@ -100,7 +101,7 @@ class ApiService {
     return this.makeRequest<T>(endpoint, { method: 'DELETE' });
   }
 
-  async patch<T>(endpoint: string, body?: any): Promise<ApiResponse<T>> {
+  async patch<T>(endpoint: string, body?: unknown): Promise<ApiResponse<T>> {
     return this.makeRequest<T>(endpoint, {
       method: 'PATCH',
       body: body ? JSON.stringify(body) : undefined,
@@ -108,4 +109,4 @@ class ApiService {
   }
 }
 
-export default new ApiService(); 
+export default new ApiService();

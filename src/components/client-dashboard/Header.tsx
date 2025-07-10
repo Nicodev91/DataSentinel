@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../modules/auth';
 
 const Header: React.FC = () => {
   const { isAuthenticated, isClient, user, logout } = useAuth();
@@ -90,4 +90,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header; 
+export default Header;

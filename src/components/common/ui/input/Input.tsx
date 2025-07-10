@@ -1,3 +1,4 @@
+import React from 'react';
 import ButtonComponent from '../button/Button';
 import showPasswordSvg from '../../../../assets/showPassword.svg';
 import hidePasswordSvg from '../../../../assets/hidePassword.svg';
@@ -61,16 +62,16 @@ const InputComponent = ({
           >
             {showPassword ? (
               <img
-              src={showPasswordSvg}
-              alt="Show password"
-              className="w-5 h-5"
-              />
+                src={showPasswordSvg}
+                alt="Show password"
+                className="w-5 h-5"
+              />
             ) : (
               <img
-              src={hidePasswordSvg}
-              alt="Hide password"
-              className="w-5 h-5"
-              />
+                src={hidePasswordSvg}
+                alt="Hide password"
+                className="w-5 h-5"
+              />
             )}
           </ButtonComponent>
         )}

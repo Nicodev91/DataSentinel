@@ -1,3 +1,5 @@
+import React from 'react';
+
 interface FormProps {
   onSubmit: (e: React.FormEvent) => void;
   children: React.ReactNode;
@@ -19,4 +21,4 @@ const FormComponent = ({
   );
 };
 
-export default FormComponent; 
+export default FormComponent;

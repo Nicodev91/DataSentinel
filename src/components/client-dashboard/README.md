@@ -74,7 +74,8 @@ import {
   ShoppingCart,
   ProductGrid
 } from '../../components/client-dashboard';
-import { useProductFilters, useShoppingCart } from '../../hooks';
+import { useProductFilters } from '../../modules/products';
+import { useShoppingCart } from '../../modules/shopping-cart';
 
 const ClientDashboard = () => {
   // Lógica del componente principal
@@ -87,4 +88,4 @@ const ClientDashboard = () => {
       <ProductGrid {...gridProps} />
     </div>
   );
-}; 
+};

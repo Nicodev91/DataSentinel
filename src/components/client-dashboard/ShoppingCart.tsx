@@ -1,6 +1,6 @@
 import React from 'react';
-import { useAuth } from '../../contexts/AuthContext';
-import type { CartItem } from '../../data/products';
+import { useAuth } from '../../modules/auth';
+import type { CartItem } from '../../modules/products';
 
 interface ShoppingCartProps {
   cart: CartItem[];
