@@ -1,5 +1,5 @@
 import React from 'react';
-import { Banner, Filters, Header, ProductGrid, ShoppingCart } from '../../../components/product-catalog';
+import { Banner, Filters, Header, ProductGrid, ShoppingCart } from '../../products/components';
 import { useProductFilters } from '../../products';
 import { useShoppingCart } from '../../shopping-cart';
 

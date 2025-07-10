@@ -1,7 +1,7 @@
 import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
-import ProtectedRoute from './shared/components/ProtectedRoute';
-import AdminLayout from './components/layout/AdminLayout';
+import ProtectedRoute from './shared/routes/ProtectedRoute';
+import AdminLayout from './shared/components/layout/AdminLayout/AdminLayout';
 import { AuthProvider, ForgotPassword, LoginPage as Login, RegisterPage as Register, VerificationCode } from './modules/auth';
 import { ProductCatalog } from './modules/core';
 import { ProductDetail } from './modules/products';

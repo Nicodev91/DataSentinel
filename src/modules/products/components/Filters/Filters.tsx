@@ -1,6 +1,6 @@
 import React from 'react';
-import type { ProductFilter } from '../../modules/products';
-import { CATEGORIES, SORT_OPTIONS } from '../../modules/products';
+import type { ProductFilter } from '../../domain/Product';
+import { CATEGORIES, SORT_OPTIONS } from '../../index';
 
 interface FiltersProps {
   filters: ProductFilter;

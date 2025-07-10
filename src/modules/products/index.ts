@@ -11,7 +11,7 @@ export { productRepository, CATEGORIES, SORT_OPTIONS } from './infrastructure/Pr
 export { useProductFilters } from './hooks/useProductFilters';
 
 // Components
-export { default as ProductCard } from './components/ProductCard';
+export { default as ProductCard } from './components/ProductCard/ProductCard';
 
 // Pages
 export { default as ProductDetail } from './pages/ProductDetail';

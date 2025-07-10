@@ -1,8 +1,8 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
-import Header from './Header';
-import Sidebar from './Sidebar';
-import './AdminLayout.css';
+import Header from '../Header/Header';
+import Sidebar from '../Sidebar/Sidebar';
+import '../AdminLayout/AdminLayout.css';
 
 const ClientLayout: React.FC = () => {
   const clientMenuItems = [

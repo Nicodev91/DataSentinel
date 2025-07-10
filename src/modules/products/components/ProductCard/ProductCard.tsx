@@ -1,7 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import type { Product } from '../domain/Product';
-import Button from '../../core/components/ui/Button';
+import type { Product } from '../../domain/Product';
 
 interface ProductCardProps {
   product: Product;
@@ -29,24 +28,27 @@ const ProductCard: React.FC<ProductCardProps> = ({
         onClick={() => navigate(`/product/${product.id}`)}
         className="cursor-pointer"
       >
-        <img src={product.image} alt={product.name} className="w-full h-24 md:h-32 object-contain mb-2 md:mb-3" />
+        <img 
+          src={product.image} 
+          alt={product.name} 
+          className="w-full h-32 md:h-40 object-cover rounded-lg mb-3"
+        />
       </div>
       
-      {/* Nombre clickeable */}
-      <h3 
-        onClick={() => navigate(`/product/${product.id}`)}
-        className="font-semibold text-sm md:text-lg mb-1 text-gray-800 line-clamp-2 cursor-pointer hover:text-green-600 transition"
-      >
-        {product.name}
-      </h3>
+      <div className="flex-1">
+        <h3 className="font-semibold text-sm md:text-base mb-2 line-clamp-2">{product.name}</h3>
+        <p className="text-xs md:text-sm text-gray-600 mb-2">{product.category}</p>
+        
+        <div className="flex justify-between items-center mb-3">
+          <span className="text-lg md:text-xl font-bold text-green-600">
+            ${product.price.toLocaleString()}
+          </span>
+        </div>
+      </div>
       
-      <p className="text-green-700 font-bold text-lg md:text-xl mb-2">
-        ${product.price.toFixed(0)} CLP
-      </p>
-      
-      <div className="mt-auto space-y-2">
-        <div className="flex items-center">
-          <label htmlFor={`quantity-${product.id}`} className="mr-2 text-xs md:text-sm">Cantidad:</label>
+      <div className="space-y-2">
+        <div className="flex items-center justify-between">
+          <span className="text-xs md:text-sm text-gray-600">Cantidad:</span>
           <select
             id={`quantity-${product.id}`}
             className="border rounded px-1 md:px-2 py-1 text-xs md:text-sm"
@@ -60,21 +62,18 @@ const ProductCard: React.FC<ProductCardProps> = ({
         </div>
         
         <div className="flex space-x-2">
-          <Button
-            variant="primary"
-            size="sm"
-            className="flex-1"
+          <button
+            className="flex-1 bg-green-600 text-white rounded px-2 md:px-4 py-2 hover:bg-green-700 transition font-semibold text-xs md:text-sm"
             onClick={() => onAddToCart(product)}
           >
             Agregar
-          </Button>
-          <Button
-            variant="secondary"
-            size="sm"
+          </button>
+          <button
             onClick={() => navigate(`/product/${product.id}`)}
+            className="bg-gray-200 text-gray-700 rounded px-2 md:px-3 py-2 hover:bg-gray-300 transition text-xs md:text-sm"
           >
             Ver
-          </Button>
+          </button>
         </div>
       </div>
     </div>
