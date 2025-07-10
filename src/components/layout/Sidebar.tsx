@@ -32,12 +32,7 @@ const Sidebar: React.FC<SidebarProps> = ({ collapsed = false, menuItems = [], us
               </li>
             ))
           ) : (
-            <li>
-              <NavLink to="/dashboard" className={({isActive}) => isActive ? 'active' : ''}>
-                <i className="fas fa-home"></i>
-                <span>Dashboard</span>
-              </NavLink>
-            </li>
+            null
           )}
         </ul>
       </nav>

@@ -1,37 +1,45 @@
 import React from 'react';
 import { useAuth } from '../../modules/auth';
-import type { CartItem } from '../../modules/products';
+import type { CartItem } from '../../modules/shopping-cart';
 
 interface ShoppingCartProps {
   cart: CartItem[];
+  onRemoveFromCart: (productId: number) => void;
 }
 
-const ShoppingCart: React.FC<ShoppingCartProps> = ({ cart }) => {
+const ShoppingCart: React.FC<ShoppingCartProps> = ({ cart, onRemoveFromCart }) => {
   const { isClient } = useAuth();
-
-  const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const shippingCost = subtotal < 25000 ? 5000 : 0;
   
-  // Aplicar descuento del 5% solo para clientes logueados
+  const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   const discount = isClient ? subtotal * 0.05 : 0;
-  const totalAfterDiscount = subtotal - discount;
-  const total = totalAfterDiscount + shippingCost;
+  const shippingCost = subtotal >= 25000 ? 0 : 3000;
+  const total = subtotal - discount + shippingCost;
 
   return (
-    <div className="max-w-5xl mx-auto mt-8 mb-4 bg-white rounded shadow p-4 px-4 md:px-6">
-      <h2 className="text-lg font-bold mb-2">Carrito de compras</h2>
+    <div className="bg-white p-4 rounded-lg shadow-sm border sticky top-4">
+      <h3 className="text-lg font-bold mb-4 text-center">Carrito de Compras</h3>
+      
       {cart.length === 0 ? (
-        <p className="text-gray-500">El carrito está vacío.</p>
+        <p className="text-gray-500 text-center text-sm md:text-base">Tu carrito está vacío</p>
       ) : (
-        <ul className="space-y-2">
+        <ul className="space-y-2 mb-4 max-h-60 overflow-y-auto">
           {cart.map(item => (
             <li key={item.id} className="flex justify-between items-center text-sm md:text-base">
-              <span className="flex-1 mr-2">{item.name} x{item.quantity}</span>
+              <div className="flex-1 mr-2">
+                <div>{item.name} x{item.quantity}</div>
+                <button
+                  onClick={() => onRemoveFromCart(item.id)}
+                  className="text-red-500 text-xs hover:text-red-700"
+                >
+                  Eliminar
+                </button>
+              </div>
               <span className="font-medium">${(item.price * item.quantity).toLocaleString()} CLP</span>
             </li>
           ))}
         </ul>
       )}
+      
       <div className="mt-4 space-y-1 text-right">
         <div className="text-gray-600 text-sm md:text-base">
           Subtotal: ${subtotal.toLocaleString()} CLP
@@ -51,10 +59,11 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({ cart }) => {
             ¡Envío gratis!
           </div>
         )}
-        <div className="font-bold text-lg md:text-xl">
+        <div className="text-lg font-bold border-t pt-2">
           Total: ${total.toLocaleString()} CLP
         </div>
       </div>
+      
       {cart.length > 0 && (
         <div className="w-full flex justify-center md:justify-end mt-4"> 
           <a

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { ButtonComponent, InputComponent, FormComponent, Toast } from "../../../shared/components";
-import Utils from "../../../utils/Utils";
+import Utils from "../../../shared/utils/Utils";
 import { useAuth } from "../contexts/AuthContext";
 
 const RegisterPage = () => {
@@ -71,9 +71,9 @@ const RegisterPage = () => {
       // Registrar usuario usando el contexto de autenticación
       await register(registerData);
       
-      showToast("¡Registro exitoso! Redirigiendo al dashboard...", "success");
+      showToast("¡Registro exitoso! Redirigiendo al catálogo...", "success");
       setTimeout(() => {
-        navigate("/client/dashboard");
+        navigate("/catalog");
       }, 1500);
     } catch (error) {
        console.error('Registration error:', error);

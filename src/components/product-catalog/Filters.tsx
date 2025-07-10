@@ -1,38 +1,29 @@
 import React from 'react';
+import type { ProductFilter } from '../../modules/products';
 import { CATEGORIES, SORT_OPTIONS } from '../../modules/products';
 
 interface FiltersProps {
-  category: string;
-  setCategory: (category: string) => void;
-  sort: string;
-  setSort: (sort: string) => void;
-  search: string;
-  setSearch: (search: string) => void;
+  filters: ProductFilter;
+  onFilterChange: (key: keyof ProductFilter, value: string) => void;
+  onResetFilters: () => void;
 }
 
-const Filters: React.FC<FiltersProps> = ({
-  category,
-  setCategory,
-  sort,
-  setSort,
-  search,
-  setSearch
-}) => {
+const Filters: React.FC<FiltersProps> = ({ filters, onFilterChange, onResetFilters }) => {
   return (
-    <div className="max-w-5xl mx-auto mt-8 px-4 md:px-2">
+    <div className="bg-white p-4 rounded-lg shadow-sm border mb-6">
       {/* Búsqueda y ordenamiento - Mobile */}
       <div className="md:hidden mb-4 space-y-2">
         <input
           type="text"
           placeholder="Buscar producto..."
           className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
+          value={filters.searchTerm}
+          onChange={e => onFilterChange('searchTerm', e.target.value)}
         />
         <select
           className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
-          value={sort}
-          onChange={e => setSort(e.target.value)}
+          value={filters.sortBy}
+          onChange={e => onFilterChange('sortBy', e.target.value)}
         >
           {SORT_OPTIONS.map(opt => (
             <option key={opt.value} value={opt.value}>{opt.label}</option>
@@ -46,8 +37,8 @@ const Filters: React.FC<FiltersProps> = ({
           {CATEGORIES.map(cat => (
             <button
               key={cat}
-              className={`px-2 md:px-4 py-1 md:py-2 rounded-full border text-xs md:text-sm font-medium transition ${category === cat ? 'bg-green-600 text-white' : 'bg-white text-gray-700 border-gray-300 hover:bg-green-100'}`}
-              onClick={() => setCategory(cat)}
+              className={`px-2 md:px-4 py-1 md:py-2 rounded-full border text-xs md:text-sm font-medium transition ${filters.category === cat ? 'bg-green-600 text-white' : 'bg-white text-gray-700 border-gray-300 hover:bg-green-100'}`}
+              onClick={() => onFilterChange('category', cat)}
             >
               {cat}
             </button>
@@ -61,18 +52,24 @@ const Filters: React.FC<FiltersProps> = ({
           type="text"
           placeholder="Buscar producto..."
           className="border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
-          value={search}
-          onChange={e => setSearch(e.target.value)}
+          value={filters.searchTerm}
+          onChange={e => onFilterChange('searchTerm', e.target.value)}
         />
         <select
           className="border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
-          value={sort}
-          onChange={e => setSort(e.target.value)}
+          value={filters.sortBy}
+          onChange={e => onFilterChange('sortBy', e.target.value)}
         >
           {SORT_OPTIONS.map(opt => (
             <option key={opt.value} value={opt.value}>{opt.label}</option>
           ))}
         </select>
+        <button
+          onClick={onResetFilters}
+          className="px-3 py-2 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition"
+        >
+          Limpiar
+        </button>
       </div>
     </div>
   );

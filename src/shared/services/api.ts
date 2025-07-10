@@ -1,4 +1,4 @@
-import { authService } from '../modules/auth';
+import { authService } from '../../modules/auth';
 
 const API_URL = 'https://back-office-backend-six.vercel.app/v1';
 

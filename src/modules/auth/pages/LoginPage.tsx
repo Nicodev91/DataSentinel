@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { ButtonComponent, InputComponent, FormComponent, Toast } from "../../../shared/components";
-import Utils from "../../../utils/Utils";
+import Utils from "../../../shared/utils/Utils";
 import { useAuth } from "../contexts/AuthContext";
 import { authService } from "../services/AuthService";
 
@@ -43,25 +43,22 @@ const LoginPage = () => {
     }
   
     try {
-      // Usar el servicio real de autenticación
-      const response = await authService.login({ email, password });
+      // Usar el contexto de autenticación
+      await login({ email, password });
       
-      if (response.success && response.user) {
-        // Login exitoso
-        login(response.user);
-        showToast(`Bienvenido ${response.user.name}`, "success");
+      // Login exitoso - el usuario se obtiene del contexto
+      const currentUser = authService.getCurrentUser();
+      if (currentUser) {
+        showToast(`Bienvenido ${currentUser.name}`, "success");
         
         // Redirigir según el rol del usuario
         setTimeout(() => {
-          if (response.user?.role === 'admin') {
-            navigate('/admin/dashboard');
+          if (currentUser.role === 'admin') {
+            navigate('/admin');
           } else {
-            navigate('/client/dashboard');
+            navigate('/catalog');
           }
         }, 1000);
-      } else {
-        // Login fallido
-        showToast(response.error || "Credenciales inválidas", "error");
       }
     } catch (error) {
       console.error('Error en login:', error);
@@ -160,11 +157,7 @@ const LoginPage = () => {
                 {isLoginLoading ? "Iniciando sesión..." : "Iniciar Sesión"}
               </ButtonComponent>
               
-              <div className="flex justify-center mt-4">
-                <Link to="/client/dashboard" className="text-sm text-forgetpassword hover:underline cursor-pointer">
-                  Volver a la página de compras
-                </Link>
-              </div>
+              {/* Dashboard link removed */}
             </FormComponent>
           </div>
         </div>

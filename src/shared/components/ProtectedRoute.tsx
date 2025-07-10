@@ -23,7 +23,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   // Si se requiere un rol específico y el usuario no lo tiene
   if (requiredRole && user?.role !== requiredRole) {
     // Redirigir según el rol del usuario
-    const userRedirect = user?.role === 'admin' ? '/admin/dashboard' : '/client/dashboard';
+    const userRedirect = user?.role === 'admin' ? '/admin' : '/catalog';
     return <Navigate to={userRedirect} replace />;
   }
 

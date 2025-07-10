@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ButtonComponent, InputComponent, FormComponent, Toast } from "../../../shared/components";
-import Utils from "../../../utils/Utils";
+import Utils from "../../../shared/utils/Utils";
 import verificationService from "../services/AuthVerificationCode";
 
 const EmptyString = "";

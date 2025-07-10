@@ -21,24 +21,24 @@ const Header: React.FC = () => {
                 </div>
                 <button 
                   onClick={logout}
-                  className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-medium transition-colors"
+                  className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors"
                 >
-                  Cerrar sesión
+                  Cerrar Sesión
                 </button>
               </>
             ) : (
               <>
                 <Link 
                   to="/register" 
-                  className="bg-blue-600 hover:bg-blue-700 text-white! px-4 py-2 rounded-lg font-medium transition-colors"
+                  className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded text-sm font-medium transition-colors"
                 >
                   Registrarse
                 </Link>
                 <Link 
                   to="/login" 
-                  className="bg-green-600 hover:bg-green-700 text-white! px-4 py-2 rounded-lg font-medium transition-colors"
+                  className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors"
                 >
-                  Iniciar sesión
+                  Login
                 </Link>
               </>
             )}
@@ -47,15 +47,15 @@ const Header: React.FC = () => {
         
         {/* Mobile Header */}
         <div className="md:hidden">
-          <div className="flex justify-between items-center mb-3">
+          <div className="flex justify-between items-center mb-2">
             <div className="text-lg font-bold text-green-700">Supermercado San Nicolás</div>
             <div className="flex items-center gap-2">
               {isAuthenticated ? (
                 <button 
                   onClick={logout}
-                  className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors"
+                  className="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-xs font-medium transition-colors"
                 >
-                  Salir
+                  Cerrar Sesión
                 </button>
               ) : (
                 <>

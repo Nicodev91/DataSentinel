@@ -29,5 +29,4 @@ export const debounce = <T extends (...args: unknown[]) => unknown>(
 };
 
 // Pages
-export { default as Dashboard } from './pages/Dashboard';
-export { default as ClientDashboard } from './pages/ClientDashboard';
+export { default as ProductCatalog } from './pages/ProductCatalog';

@@ -6,7 +6,7 @@ import './AdminLayout.css';
 
 const ClientLayout: React.FC = () => {
   const clientMenuItems = [
-    { name: 'Dashboard', path: '/client/dashboard', icon: 'fa-tachometer-alt' },
+    { name: 'Catálogo', path: '/catalog', icon: 'fa-store' },
     { name: 'Mis Pedidos', path: '/client/orders', icon: 'fa-shopping-bag' },
     { name: 'Productos', path: '/client/products', icon: 'fa-box' },
     { name: 'Perfil', path: '/client/profile', icon: 'fa-user' },
@@ -26,4 +26,4 @@ const ClientLayout: React.FC = () => {
   );
 };
 
-export default ClientLayout; 
+export default ClientLayout;

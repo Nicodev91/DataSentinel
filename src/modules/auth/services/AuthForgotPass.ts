@@ -12,7 +12,7 @@ export interface ForgotPasswordResponse {
 }
 
 
-import apiService from '../services/api';
+import apiService from '../../../shared/services/api';
 
 class ForgotPasswordService {
   async sendOTP(email: string): Promise<ForgotPasswordResponse> {
@@ -32,7 +32,7 @@ class ForgotPasswordService {
           error: response.error || 'Error al enviar el código OTP'
         };
       }
-    } catch (error) {
+    } catch {
       return { 
         success: false, 
         error: 'Error de conexión con el servidor'
@@ -44,7 +44,7 @@ class ForgotPasswordService {
     try {
       const response = await this.sendOTP(email);
       return response.success;
-    } catch (error) {
+    } catch {
       return false;
     }
   }

@@ -1,5 +1,5 @@
 // Domain
-export type { Product, CartItem, ProductFilter, ProductRepository } from './domain/Product';
+export type { Product, ProductFilter, ProductRepository } from './domain/Product';
 
 // Services
 export { productService } from './services/ProductService';

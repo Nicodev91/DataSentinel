@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ButtonComponent, InputComponent, FormComponent, Toast } from "../../../shared/components";
-import Utils from "../../../utils/Utils";
+import Utils from "../../../shared/utils/Utils";
 import forgotPasswordService from "../services/AuthForgotPass";
 
 const ForgotPassword = () => {

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import type { Product } from '../domain/Product';
 import { useShoppingCart } from '../../shopping-cart';
-import { Header } from '../../../components/client-dashboard';
+// Header import removed - dashboard components deleted
 
 const ProductDetail: React.FC = () => {
   // const { id } = useParams<{ id: string }>();
@@ -27,7 +27,7 @@ const ProductDetail: React.FC = () => {
         <div className="text-center">
           <h1 className="text-2xl font-bold text-gray-800 mb-4">Producto no encontrado</h1>
           <button 
-            onClick={() => navigate('/client/dashboard')}
+            onClick={() => navigate('/catalog')}
             className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition"
           >
             Volver al catálogo
@@ -46,12 +46,12 @@ const ProductDetail: React.FC = () => {
   
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
+      {/* Header component removed - dashboard deleted */}
       
       <div className="max-w-6xl mx-auto px-4 py-8">
         {/* Botón de volver */}
         <button 
-          onClick={() => navigate('/client/dashboard')}
+          onClick={() => navigate('/catalog')}
           className="mb-6 flex items-center text-green-600 hover:text-green-700 transition"
         >
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

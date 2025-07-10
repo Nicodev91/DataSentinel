@@ -13,4 +13,4 @@ const Banner: React.FC = () => {
   );
 };
 
-export default Banner; 
+export default Banner;
