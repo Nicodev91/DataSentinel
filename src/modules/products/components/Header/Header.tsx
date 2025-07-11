@@ -21,24 +21,24 @@ const Header: React.FC = () => {
                 </div>
                 <button 
                   onClick={logout}
-                  className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors"
+                  className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 border border-red-500"
                 >
-                  Cerrar Sesión
+                  🚪 Cerrar Sesión
                 </button>
               </>
             ) : (
               <>
                 <Link 
                   to="/register" 
-                  className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors"
+                  className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 border border-blue-500"
                 >
-                  Registrarse
+                  📝 Registrarse
                 </Link>
                 <Link 
                   to="/login" 
-                  className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors"
+                  className="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-6 py-2.5 rounded-lg text-sm font-semibold transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 border border-emerald-500"
                 >
-                  Login
+                  🔑 Login
                 </Link>
               </>
             )}
@@ -53,23 +53,23 @@ const Header: React.FC = () => {
               {isAuthenticated ? (
                 <button 
                   onClick={logout}
-                  className="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded text-xs font-medium transition-colors"
+                  className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 border border-red-500"
                 >
-                  Cerrar Sesión
+                  🚪 Salir
                 </button>
               ) : (
                 <>
                   <Link 
                     to="/register" 
-                    className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors"
+                    className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 border border-blue-500"
                   >
-                    Registrarse
+                    📝 Registro
                   </Link>
                   <Link 
                     to="/login" 
-                    className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm font-medium transition-colors"
+                    className="bg-gradient-to-r from-emerald-600 to-emerald-700 hover:from-emerald-700 hover:to-emerald-800 text-white px-4 py-2 rounded-lg text-xs font-semibold transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 border border-emerald-500"
                   >
-                    Login
+                    🔑 Login
                   </Link>
                 </>
               )}

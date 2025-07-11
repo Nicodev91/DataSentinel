@@ -17,18 +17,33 @@ const ProductGrid: React.FC<ProductGridProps> = ({
 }) => {
   console.log(products)
   return (
-    <div className="max-w-5xl mx-auto mt-8 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 px-4 md:px-2 pb-10">
-      {products.map(product => (
-        <ProductCard
-          key={product.productId || product.id}
-        product={product}
-        quantity={quantities[product.productId || product.id || 0] || 1}
-          onQuantityChange={onQuantityChange}
-          onAddToCart={onAddToCart}
-        />
-      ))}
+    <div className="max-w-6xl mx-auto mt-8">
+      {/* Título de la sección */}
+      <div className="text-center mb-8">
+        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2">🛒 Nuestros Productos</h2>
+        <p className="text-gray-600">Encuentra todo lo que necesitas al mejor precio</p>
+      </div>
+      
+      {/* Grid de productos */}
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6 px-4 md:px-2 pb-10">
+        {products.map(product => (
+          <ProductCard
+            key={product.productId || product.id}
+            product={product}
+            quantity={quantities[product.productId || product.id || 0] || 1}
+            onQuantityChange={onQuantityChange}
+            onAddToCart={onAddToCart}
+          />
+        ))}
+      </div>
+      
+      {/* Estado vacío mejorado */}
       {products.length === 0 && (
-        <div className="col-span-full text-center text-gray-500 py-10">No se encontraron productos.</div>
+        <div className="col-span-full text-center py-16">
+          <div className="text-6xl mb-4">🔍</div>
+          <h3 className="text-xl font-semibold text-gray-700 mb-2">No se encontraron productos</h3>
+          <p className="text-gray-500">Intenta ajustar los filtros o buscar algo diferente</p>
+        </div>
       )}
     </div>
   );
