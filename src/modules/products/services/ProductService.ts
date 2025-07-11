@@ -1,13 +1,11 @@
 import axios, { type AxiosResponse } from 'axios';
 import type { Product, ProductFilter } from '../domain/Product';
+import { config, getApiUrl } from '../../../shared/utils/config';
 
-// Configuración de la API
-const API_BASE_URL = 'http://localhost:8091/v1';
-
-// Crear instancia de axios
+// Crear instancia de axios con configuración dinámica
 const apiClient = axios.create({
-  baseURL: API_BASE_URL,
-  timeout: 10000,
+  baseURL: `${config.apiBaseUrl}/v1`,
+  timeout: config.apiTimeout,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
@@ -54,15 +52,8 @@ interface CatalogApiResponse {
 }
 
 export class ProductService {
-  private useApi: boolean;
 
-  constructor(useApi: boolean = false) {
-    this.useApi = useApi;
-  }
-
-  // Método para cambiar entre API y datos mock
-  setApiMode(useApi: boolean) {
-    this.useApi = useApi;
+  constructor() {
   }
 
   async getAllProducts(): Promise<Product[]> {
@@ -96,7 +87,7 @@ export class ProductService {
       
       if (axios.isAxiosError(error)) {
         if (error.code === 'ECONNREFUSED') {
-          throw new Error('No se puede conectar al servidor. Verifique que esté ejecutándose en http://localhost:8091');
+          throw new Error(`No se puede conectar al servidor. Verifique que esté ejecutándose en ${config.apiBaseUrl}`);
         } else if (error.response) {
           throw new Error(`Error del servidor: ${error.response.status} - ${error.response.statusText}`);
         } else if (error.request) {

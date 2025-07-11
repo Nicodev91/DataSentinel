@@ -1,27 +1,12 @@
 import React from 'react';
 import { useProductCatalog } from '../../hooks/useProductApi';
-import { ProductService } from '../../services/ProductService';
 import ProductCard from '../ProductCard/ProductCard';
+import { config } from '../../../../shared/utils/config';
 import './ProductCatalogApi.css';
-
-// Instancia del servicio para llamadas directas
-const apiProductService = new ProductService(true);
-
-/**
- * Función para probar llamadas directas a la API
- */
-const testDirectApiCall = async () => {
-  try {
-    const products = await apiProductService.getAllProducts();
-    console.log('Productos obtenidos directamente:', products);
-  } catch (error) {
-    console.error('Error en llamada directa:', error);
-  }
-};
 
 /**
  * Componente que demuestra el uso del servicio axios
- * para obtener productos del endpoint: http://localhost:8091/v1/catalog/products
+ * para obtener productos del endpoint API configurado dinámicamente
  */
 const ProductCatalogApi: React.FC = () => {
   const { products, loading, error, refetch } = useProductCatalog();
@@ -52,7 +37,7 @@ const ProductCatalogApi: React.FC = () => {
           <div className="error-details">
             <h4>Detalles técnicos:</h4>
             <ul>
-              <li>Endpoint: <code>http://localhost:8091/v1/catalog/products</code></li>
+              <li>Endpoint: <code>{config.apiBaseUrl}/v1/catalog/products</code></li>
               <li>Método: GET</li>
               <li>Implementación: Axios</li>
             </ul>
@@ -67,7 +52,7 @@ const ProductCatalogApi: React.FC = () => {
       <div className="catalog-header">
         <h2>Catálogo de Productos (API)</h2>
         <p className="api-info">
-          Datos obtenidos desde: <code>http://localhost:8091/v1/catalog/products</code>
+          Datos obtenidos desde: <code>{config.apiBaseUrl}/v1/catalog/products</code>
         </p>
         <button 
           className="refresh-button" 

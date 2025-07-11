@@ -4,8 +4,7 @@ import ProtectedRoute from './shared/routes/ProtectedRoute';
 import AdminLayout from './shared/components/layout/AdminLayout/AdminLayout';
 import { AuthProvider, ForgotPassword, LoginPage as Login, RegisterPage as Register, VerificationCode } from './modules/auth';
 import { ProductCatalog } from './modules/core';
-import { ProductDetail, ProductCatalogApi } from './modules/products';
-import ApiTestPage from './modules/products/pages/ApiTestPage';
+import { ProductDetail } from './modules/products';
 
 // Componentes temporales para las páginas que aún no existen
 const TemporaryPage = ({ title }: { title: string }) => (
@@ -44,12 +43,6 @@ function App() {
           
           {/* Product catalog - Accesible para todos los usuarios */}
           <Route path="/catalog" element={<ProductCatalog />} />
-          
-          {/* API Test Page - Página de prueba para axios */}
-          <Route path="/api-test" element={<ApiTestPage />} />
-          
-          {/* Categories Test Page - Página de prueba para categorías */}
-
           
           {/* Product detail - Accesible para usuarios autenticados */}
           <Route path="/product/:id" element={<ProductDetail />} />

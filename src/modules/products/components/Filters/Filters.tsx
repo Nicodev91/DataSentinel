@@ -21,15 +21,23 @@ const Filters: React.FC<FiltersProps> = ({ filters, onFilterChange, onResetFilte
           value={filters.searchTerm}
           onChange={e => onFilterChange('searchTerm', e.target.value)}
         />
-        <select
-          className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
-          value={filters.sortBy}
-          onChange={e => onFilterChange('sortBy', e.target.value)}
-        >
-          {SORT_OPTIONS.map(opt => (
-            <option key={opt.value} value={opt.value}>{opt.label}</option>
-          ))}
-        </select>
+        <div className="flex gap-2">
+          <select
+            className="flex-1 border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-400"
+            value={filters.sortBy}
+            onChange={e => onFilterChange('sortBy', e.target.value)}
+          >
+            {SORT_OPTIONS.map(opt => (
+              <option key={opt.value} value={opt.value}>{opt.label}</option>
+            ))}
+          </select>
+          <button
+            onClick={onResetFilters}
+            className="px-3 py-2 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300 transition"
+          >
+            Limpiar
+          </button>
+        </div>
       </div>
 
       {/* Categorías */}

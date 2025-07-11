@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import type { Product } from '../domain/Product';
 import { useShoppingCart } from '../../shopping-cart';
 import { useProduct } from '../hooks/useProductApi';
 // Header import removed - dashboard components deleted

@@ -3,7 +3,7 @@ import type { Product, ProductFilter } from '../domain/Product';
 import { ProductService } from '../services/ProductService';
 
 // Instancia del servicio para datos mock
-const productService = new ProductService(false);
+const productService = new ProductService();
 
 export const useProductFilters = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);

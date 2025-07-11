@@ -3,7 +3,7 @@ import type { Product } from '../domain/Product';
 import { ProductService } from '../services/ProductService';
 
 // Instancia del servicio configurada para usar API
-const apiProductService = new ProductService(true);
+const apiProductService = new ProductService();
 
 // Hook para obtener todos los productos del catálogo
 export const useProductCatalog = () => {
