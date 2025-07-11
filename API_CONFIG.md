@@ -6,7 +6,7 @@ Crea un archivo `.env` en la raíz del proyecto con las siguientes variables:
 
 ```env
 # Configuración del Backend API
-VITE_API_BASE_URL=https://back-office-backend-six.vercel.app/v1
+VITE_API_BASE_URL=https://backend-data-sentinel-nico-devs-projects.vercel.app
 ```
 
 **Nota:** Actualmente el servicio está configurado para usar directamente la URL del backend de Vercel.
@@ -245,4 +245,4 @@ const LoginComponent = () => {
 - **Persistencia simple**: Guarda token y usuario en localStorage
 - **Funciones básicas**: login, logout, enviar OTP, verificar autenticación
 - **Sin complejidad**: No maneja refresh automático ni verificación de roles
-- **Uso directo**: Se usa directamente en los componentes 
+- **Uso directo**: Se usa directamente en los componentes

@@ -1,6 +1,7 @@
 import type { User, AuthCredentials, RegisterData, AuthService as IAuthService, AuthTokens } from '../domain/User';
+import { getApiBaseUrl } from '../../../shared/utils/config';
 
-const API_URL = 'https://back-office-backend-six.vercel.app/v1';
+const API_URL = getApiBaseUrl();
 const TOKEN_KEY = 'datasentinel_access_token';
 const REFRESH_TOKEN_KEY = 'datasentinel_refresh_token';
 const USER_KEY = 'datasentinel_user';
@@ -14,13 +15,12 @@ class AuthService implements IAuthService {
 
   async login(credentials: AuthCredentials): Promise<User> {
     try {
-      const response = await fetch(`${API_URL}/auth/login`, {
+      const response = await fetch(`${API_URL}/v1/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(credentials),
-        credentials: 'include',
       });
 
       if (!response.ok) {
@@ -28,9 +28,12 @@ class AuthService implements IAuthService {
       }
 
       const data = await response.json();
-      const { user, tokens } = data;
+      const { user, accessToken } = data;
 
-      this.saveTokens(tokens);
+      this.saveTokens({
+        accessToken: accessToken,
+        refreshToken: ""
+      });
       this.saveUser(user);
       this.currentUser = user;
 

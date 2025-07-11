@@ -4,7 +4,7 @@ import { useAuth } from '../../../auth';
 
 const Header: React.FC = () => {
   const { isAuthenticated, isClient, user, logout } = useAuth();
-
+  console.log(user)
   return (
     <div className="bg-white shadow-sm border-b">
       <div className="max-w-5xl mx-auto px-4 py-3">

@@ -21,7 +21,7 @@ const getEnvironment = (): 'development' | 'production' => {
 /**
  * Get the API base URL based on current environment
  */
-const getApiBaseUrl = (): string => {
+export const getApiBaseUrl = (): string => {
   const environment = getEnvironment();
   
   if (environment === 'production') {

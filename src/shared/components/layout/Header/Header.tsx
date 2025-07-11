@@ -18,7 +18,6 @@ const Header: React.FC<HeaderProps> = ({
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Buscando:', searchQuery);
   };
 
   return (

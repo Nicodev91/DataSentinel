@@ -15,7 +15,6 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   onQuantityChange,
   onAddToCart
 }) => {
-  console.log(products)
   return (
     <div className="max-w-6xl mx-auto mt-8">
       {/* Título de la sección */}

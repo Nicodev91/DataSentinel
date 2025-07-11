@@ -140,7 +140,6 @@ export const useCategories = () => {
       setLoading(true);
       setError(null);
       const data = await apiProductService.getCategories();
-      console.log(data)
       setCategories(data);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error desconocido');

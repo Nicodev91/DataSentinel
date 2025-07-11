@@ -12,7 +12,8 @@ export interface VerificationResponse {
 }
 
 // Configuración
-const API_URL = 'https://back-office-backend-six.vercel.app/v1';
+import { getApiBaseUrl } from '../../../shared/utils/config';
+const API_URL = getApiBaseUrl();
 
 // Servicio para verificación de código OTP
 class VerificationCodeService {

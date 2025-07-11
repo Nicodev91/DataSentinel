@@ -1,6 +1,7 @@
 import { authService } from '../../modules/auth';
+import { getApiBaseUrl } from '../utils/config';
 
-const API_URL = 'https://back-office-backend-six.vercel.app/v1';
+const API_URL = getApiBaseUrl();
 
 interface ApiResponse<T = unknown> {
   data?: T;

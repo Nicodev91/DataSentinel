@@ -16,7 +16,9 @@ export interface LoginResponse {
   error?: string;
 }
 
-const API_URL = 'https://backend-data-sentinel.vercel.app/v1';
+import { getApiBaseUrl } from '../../../shared/utils/config';
+
+const API_URL = getApiBaseUrl();
 
 // Función para establecer cookies seguras
 const setSecureCookie = (name: string, value: string, days: number = 7) => {
