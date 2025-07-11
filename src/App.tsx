@@ -1,16 +1,10 @@
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import AdminLayout from './components/layout/AdminLayout';
-import ClientLayout from './components/layout/ClientLayout';
-import ProtectedRoute from './components/auth/ProtectedRoute';
+import { Navigate, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
-import Login from './pages/login-page/LoginPage';
-import Register from './pages/register-page/RegisterPage';
-import ForgotPassword from './pages/forgot-password/ForgotPassword';
-import VerificationCode from './pages/forgot-password/VerificationCode';
-import Dashboard from './pages/dashboard/Dashboard';
-import ClientDashboard from './pages/client-dashboard/ClientDashboard';
-import ProductDetail from './pages/product-detail/ProductDetail';
-import { AuthProvider } from './contexts/AuthContext';
+import ProtectedRoute from './shared/routes/ProtectedRoute';
+import AdminLayout from './shared/components/layout/AdminLayout/AdminLayout';
+import { AuthProvider, ForgotPassword, LoginPage as Login, RegisterPage as Register, VerificationCode } from './modules/auth';
+import { ProductCatalog } from './modules/core';
+import { ProductDetail } from './modules/products';
 
 // Componentes temporales para las páginas que aún no existen
 const TemporaryPage = ({ title }: { title: string }) => (
@@ -25,8 +19,8 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-          {/* Redirect from root to client dashboard */}
-          <Route path="/" element={<Navigate to="/client/dashboard" replace />} />
+          {/* Redirect from root to catalog */}
+          <Route path="/" element={<Navigate to="/catalog" replace />} />
           
           {/* Auth routes */}
           <Route path="/login" element={<Login />} />
@@ -40,15 +34,15 @@ function App() {
               <AdminLayout />
             </ProtectedRoute>
           }>
-            <Route path="dashboard" element={<Dashboard />} />
+            {/* Dashboard route removed */}
             <Route path="users" element={<TemporaryPage title="Gestión de Usuarios" />} />
             <Route path="products" element={<TemporaryPage title="Gestión de Productos" />} />
             <Route path="orders" element={<TemporaryPage title="Gestión de Pedidos" />} />
             <Route path="settings" element={<TemporaryPage title="Configuración" />} />
           </Route>
           
-          {/* Client routes - Solo para usuarios client */}
-          <Route path="/client/dashboard" element={<ClientDashboard />} />
+          {/* Product catalog - Accesible para todos los usuarios */}
+          <Route path="/catalog" element={<ProductCatalog />} />
           
           {/* Product detail - Accesible para usuarios autenticados */}
           <Route path="/product/:id" element={<ProductDetail />} />
