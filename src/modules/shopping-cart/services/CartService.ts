@@ -14,7 +14,8 @@ class CartService implements ICartService {
   }
 
   addItem(product: Product, quantity: number = 1): void {
-    const existingItemIndex = this.cart.items.findIndex(item => item.id === (product.productId || product.id));
+    const productId = product.productId || product.id || 0;
+    const existingItemIndex = this.cart.items.findIndex(item => item.id === productId);
     
     if (existingItemIndex >= 0) {
       // Si el producto ya existe, actualizar cantidad
@@ -22,7 +23,7 @@ class CartService implements ICartService {
     } else {
       // Si es un producto nuevo, agregarlo al carrito
       const newItem: CartItem = {
-        id: product.productId || product.id,
+        id: productId,
         name: product.name,
         price: product.price,
         quantity,
