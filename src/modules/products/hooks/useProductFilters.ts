@@ -1,6 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import type { Product, ProductFilter } from '../domain/Product';
-import { productService } from '../services/ProductService';
+import { ProductService } from '../services/ProductService';
+
+// Instancia del servicio para datos mock
+const productService = new ProductService(false);
 import { CATEGORIES } from '../infrastructure/ProductRepository';
 
 export const useProductFilters = () => {

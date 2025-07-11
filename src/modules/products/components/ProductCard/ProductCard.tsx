@@ -25,11 +25,11 @@ const ProductCard: React.FC<ProductCardProps> = ({
       
       {/* Imagen clickeable */}
       <div 
-        onClick={() => navigate(`/product/${product.id}`)}
+        onClick={() => navigate(`/product/${product.productId || product.id}`)}
         className="cursor-pointer"
       >
         <img 
-          src={product.image} 
+          src={product.image || product.imageUrl || '/placeholder-product.jpg'} 
           alt={product.name} 
           className="w-full h-32 md:h-40 object-cover rounded-lg mb-3"
         />
@@ -37,7 +37,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
       
       <div className="flex-1">
         <h3 className="font-semibold text-sm md:text-base mb-2 line-clamp-2">{product.name}</h3>
-        <p className="text-xs md:text-sm text-gray-600 mb-2">{product.category}</p>
+        <p className="text-xs md:text-sm text-gray-600 mb-2">{typeof product.category === 'object' ? product.category.name : product.category}</p>
         
         <div className="flex justify-between items-center mb-3">
           <span className="text-lg md:text-xl font-bold text-green-600">
@@ -50,10 +50,10 @@ const ProductCard: React.FC<ProductCardProps> = ({
         <div className="flex items-center justify-between">
           <span className="text-xs md:text-sm text-gray-600">Cantidad:</span>
           <select
-            id={`quantity-${product.id}`}
+            id={`quantity-${product.productId || product.id}`}
             className="border rounded px-1 md:px-2 py-1 text-xs md:text-sm"
             value={quantity}
-            onChange={e => onQuantityChange(product.id, Number(e.target.value))}
+            onChange={e => onQuantityChange(product.productId || product.id || 0, Number(e.target.value))}
           >
             {Array.from({ length: 10 }, (_, i) => i + 1).map(num => (
               <option key={num} value={num}>{num}</option>
@@ -69,7 +69,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
             Agregar
           </button>
           <button
-            onClick={() => navigate(`/product/${product.id}`)}
+            onClick={() => navigate(`/product/${product.productId || product.id}`)}
             className="bg-gray-200 text-gray-700 rounded px-2 md:px-3 py-2 hover:bg-gray-300 transition text-xs md:text-sm"
           >
             Ver

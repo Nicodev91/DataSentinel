@@ -13,10 +13,27 @@ const ProductDetail: React.FC = () => {
   // TODO: Replace with actual product fetching from repository
   // Temporarily using mock data until proper implementation
   const product: Product | null = {
-    id: 1,
+    productId: 1,
     name: 'Producto de ejemplo',
     price: 1500,
-    category: 'Ejemplo',
+    stock: 10,
+    description: 'Producto de alta calidad disponible en Supermercado San Nicolás. Ideal para tu hogar y familia.',
+    categoryId: 1,
+    imageUrl: '/placeholder-product.jpg',
+    rutSupplier: '12345678-9',
+    status: true,
+    supplier: {
+      rut: '12345678-9',
+      name: 'Proveedor Ejemplo',
+      address: 'Dirección del proveedor'
+    },
+    category: {
+      categoryId: 1,
+      name: 'Ejemplo',
+      description: 'Categoría de ejemplo'
+    },
+    // Campos de compatibilidad
+    id: 1,
     image: '/placeholder-product.jpg',
     isNew: false
   };
@@ -65,7 +82,7 @@ const ProductDetail: React.FC = () => {
             {/* Imagen del producto */}
             <div className="flex justify-center items-center bg-gray-50 rounded-lg p-8">
               <img 
-                src={product.image || '/placeholder-product.jpg'} 
+                src={product.image || product.imageUrl || '/placeholder-product.jpg'} 
                 alt={product.name}
                 className="max-w-full max-h-96 object-contain"
               />
@@ -87,7 +104,7 @@ const ProductDetail: React.FC = () => {
               <div className="flex items-center space-x-2">
                 <span className="text-sm text-gray-500">Categoría:</span>
                 <span className="bg-green-100 text-green-800 text-sm px-2 py-1 rounded">
-                  {product.category}
+                  {typeof product.category === 'object' ? product.category.name : product.category}
                 </span>
               </div>
               
@@ -96,12 +113,11 @@ const ProductDetail: React.FC = () => {
                 ${product.price.toLocaleString()} CLP
               </div>
               
-              {/* Descripción (puedes expandir esto más tarde) */}
+              {/* Descripción */}
               <div className="space-y-2">
                 <h3 className="text-lg font-semibold text-gray-800">Descripción</h3>
                 <p className="text-gray-600">
-                  Producto de alta calidad disponible en Supermercado San Nicolás. 
-                  Ideal para tu hogar y familia.
+                  {product.description}
                 </p>
               </div>
               
@@ -151,12 +167,12 @@ const ProductDetail: React.FC = () => {
             {/* Temporarily disabled until proper implementation
             relatedProducts.map((relatedProduct: Product) => (
                 <div 
-                  key={relatedProduct.id}
-                  onClick={() => navigate(`/product/${relatedProduct.id}`)}
+                  key={relatedProduct.productId || relatedProduct.id}
+            onClick={() => navigate(`/product/${relatedProduct.productId || relatedProduct.id}`)}
                   className="bg-white rounded-lg shadow hover:shadow-lg transition cursor-pointer p-4"
                 >
                   <img 
-                    src={relatedProduct.image || '/placeholder-product.jpg'} 
+                    src={relatedProduct.image || relatedProduct.imageUrl || '/placeholder-product.jpg'} 
                     alt={relatedProduct.name}
                     className="w-full h-24 object-contain mb-2"
                   />

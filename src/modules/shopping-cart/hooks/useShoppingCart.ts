@@ -24,12 +24,13 @@ export const useShoppingCart = () => {
   };
 
   const handleAddToCart = (product: Product) => {
-    const quantity = quantities[product.id] || 1;
+    const productKey = product.productId || product.id || 0;
+    const quantity = quantities[productKey] || 1;
     cartService.addItem(product, quantity);
     refreshCart();
     
     // Opcional: resetear a 1 después de agregar
-    setQuantities(prev => ({ ...prev, [product.id]: 1 }));
+    setQuantities(prev => ({ ...prev, [productKey]: 1 }));
   };
 
   const removeFromCart = (productId: number) => {

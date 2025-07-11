@@ -15,13 +15,14 @@ const ProductGrid: React.FC<ProductGridProps> = ({
   onQuantityChange,
   onAddToCart
 }) => {
+  console.log(products)
   return (
     <div className="max-w-5xl mx-auto mt-8 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-6 px-4 md:px-2 pb-10">
       {products.map(product => (
         <ProductCard
-          key={product.id}
-          product={product}
-          quantity={quantities[product.id] || 1}
+          key={product.productId || product.id}
+        product={product}
+        quantity={quantities[product.productId || product.id || 0] || 1}
           onQuantityChange={onQuantityChange}
           onAddToCart={onAddToCart}
         />

@@ -1,22 +1,179 @@
+import axios, { type AxiosResponse } from 'axios';
 import type { Product, ProductFilter } from '../domain/Product';
 import { productRepository } from '../infrastructure/ProductRepository';
 import { SORT_OPTIONS } from '../infrastructure/ProductRepository';
 
+// Configuración de la API
+const API_BASE_URL = 'http://localhost:8091/v1';
+
+// Crear instancia de axios
+const apiClient = axios.create({
+  baseURL: API_BASE_URL,
+  timeout: 10000,
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  }
+});
+
+// Interceptores
+apiClient.interceptors.request.use(
+  (config) => {
+    console.log('Realizando petición a:', config.url);
+    return config;
+  },
+  (error) => {
+    console.error('Error en la petición:', error);
+    return Promise.reject(error);
+  }
+);
+
+apiClient.interceptors.response.use(
+  (response: AxiosResponse) => {
+    console.log('Respuesta recibida:', response.status, response.statusText);
+    return response;
+  },
+  (error) => {
+    console.error('Error en la respuesta:', error.response?.status, error.response?.statusText);
+    return Promise.reject(error);
+  }
+);
+
+// Interfaz para respuestas de API
+interface ApiResponse<T> {
+  data: T;
+  message?: string;
+  status: string;
+}
+
+// Interfaz para respuesta paginada del catálogo
+interface CatalogApiResponse {
+  products: Product[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
 export class ProductService {
+  private useApi: boolean;
+
+  constructor(useApi: boolean = false) {
+    this.useApi = useApi;
+  }
+
+  // Método para cambiar entre API y datos mock
+  setApiMode(useApi: boolean) {
+    this.useApi = useApi;
+  }
+
   async getAllProducts(): Promise<Product[]> {
+    if (this.useApi) {
+      return await this.getCatalogProductsFromApi();
+    }
     return await productRepository.getAll();
   }
 
   async getProductById(id: number): Promise<Product | null> {
+    if (this.useApi) {
+      return await this.getProductByIdFromApi(id);
+    }
     return await productRepository.getById(id);
   }
 
   async getProductsByCategory(category: string): Promise<Product[]> {
+    if (this.useApi) {
+      return await this.getProductsByCategoryFromApi(category);
+    }
     return await productRepository.getByCategory(category);
   }
 
   async searchProducts(term: string): Promise<Product[]> {
+    if (this.useApi) {
+      return await this.searchProductsFromApi(term);
+    }
     return await productRepository.search(term);
+  }
+
+  // Métodos específicos para API
+  async getCatalogProductsFromApi(): Promise<Product[]> {
+    try {
+      const response: AxiosResponse<CatalogApiResponse> = await apiClient.get('/catalog/products');
+      
+      if (response.status === 200 && response.data && response.data.products) {
+        return response.data.products;
+      }
+      
+      throw new Error('Respuesta inválida del servidor');
+    } catch (error) {
+      console.error('Error al obtener productos del catálogo:', error);
+      
+      if (axios.isAxiosError(error)) {
+        if (error.code === 'ECONNREFUSED') {
+          throw new Error('No se puede conectar al servidor. Verifique que esté ejecutándose en http://localhost:8091');
+        } else if (error.response) {
+          throw new Error(`Error del servidor: ${error.response.status} - ${error.response.statusText}`);
+        } else if (error.request) {
+          throw new Error('No se recibió respuesta del servidor');
+        }
+      }
+      
+      throw new Error('Error desconocido al obtener productos');
+    }
+  }
+
+  async getProductByIdFromApi(id: number): Promise<Product | null> {
+    try {
+      const response: AxiosResponse<ApiResponse<Product>> = await apiClient.get(`/catalog/products/${id}`);
+      
+      if (response.status === 200 && response.data) {
+        return response.data.data || response.data;
+      }
+      
+      return null;
+    } catch (error) {
+      console.error(`Error al obtener producto con ID ${id}:`, error);
+      
+      if (axios.isAxiosError(error) && error.response?.status === 404) {
+        return null;
+      }
+      
+      throw error;
+    }
+  }
+
+  async searchProductsFromApi(searchTerm: string): Promise<Product[]> {
+    try {
+      const response: AxiosResponse<CatalogApiResponse> = await apiClient.get('/catalog/products', {
+        params: { search: searchTerm }
+      });
+      
+      if (response.status === 200 && response.data && response.data.products) {
+        return response.data.products;
+      }
+      
+      return [];
+    } catch (error) {
+      console.error('Error al buscar productos:', error);
+      throw error;
+    }
+  }
+
+  async getProductsByCategoryFromApi(category: string): Promise<Product[]> {
+    try {
+      const response: AxiosResponse<CatalogApiResponse> = await apiClient.get('/catalog/products', {
+        params: { category: category }
+      });
+      
+      if (response.status === 200 && response.data && response.data.products) {
+        return response.data.products;
+      }
+      
+      return [];
+    } catch (error) {
+      console.error(`Error al obtener productos de la categoría ${category}:`, error);
+      throw error;
+    }
   }
 
   async getFilteredProducts(filter: ProductFilter): Promise<Product[]> {
@@ -33,7 +190,7 @@ export class ProductService {
     if (filter.searchTerm) {
       products = products.filter(product => 
         product.name.toLowerCase().includes(filter.searchTerm.toLowerCase()) ||
-        product.category.toLowerCase().includes(filter.searchTerm.toLowerCase())
+        (typeof product.category === 'object' ? product.category.name : product.category).toLowerCase().includes(filter.searchTerm.toLowerCase())
       );
     }
 
@@ -64,5 +221,3 @@ export class ProductService {
     return SORT_OPTIONS;
   }
 }
-
-export const productService = new ProductService();

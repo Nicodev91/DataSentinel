@@ -1,10 +1,27 @@
 export interface Product {
-  id: number;
+  productId: number;
   name: string;
   price: number;
-  image: string;
-  category: string;
-  isNew: boolean;
+  stock: number;
+  description: string;
+  categoryId: number;
+  imageUrl: string;
+  rutSupplier: string;
+  status: boolean;
+  supplier: {
+    rut: string;
+    name: string;
+    address: string;
+  };
+  category: {
+    categoryId: number;
+    name: string;
+    description: string;
+  };
+  // Campos para compatibilidad con componentes existentes
+  id?: number;
+  image?: string;
+  isNew?: boolean;
 }
 
 export interface CartItem {

@@ -14,7 +14,7 @@ class CartService implements ICartService {
   }
 
   addItem(product: Product, quantity: number = 1): void {
-    const existingItemIndex = this.cart.items.findIndex(item => item.id === product.id);
+    const existingItemIndex = this.cart.items.findIndex(item => item.id === (product.productId || product.id));
     
     if (existingItemIndex >= 0) {
       // Si el producto ya existe, actualizar cantidad
@@ -22,11 +22,11 @@ class CartService implements ICartService {
     } else {
       // Si es un producto nuevo, agregarlo al carrito
       const newItem: CartItem = {
-        id: product.id,
+        id: product.productId || product.id,
         name: product.name,
         price: product.price,
         quantity,
-        image: product.image
+        image: product.image || product.imageUrl || '/placeholder-product.jpg'
       };
       this.cart.items.push(newItem);
     }
