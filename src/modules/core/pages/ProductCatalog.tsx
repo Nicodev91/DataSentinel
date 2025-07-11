@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Banner, Filters, Header, ProductGrid, ShoppingCart } from '../../products/components';
-import { useProductCatalog, useProductSearch, useProductsByCategory } from '../../products/hooks/useProductApi';
+import { useProductCatalog, useProductSearch, useProductsByCategory, useCategories } from '../../products/hooks/useProductApi';
 import { useShoppingCart } from '../../shopping-cart';
 import type { ProductFilter } from '../../products/domain/Product';
 
@@ -8,7 +8,7 @@ const ProductCatalog: React.FC = () => {
   // Estado local para filtros
   const [filters, setFilters] = useState<ProductFilter>({
     category: '1',
-    sortBy: 'name-asc',
+    sortBy: 'default',
     searchTerm: ''
   });
 
@@ -16,6 +16,7 @@ const ProductCatalog: React.FC = () => {
   const { products: allProducts, loading: catalogLoading, error: catalogError } = useProductCatalog();
   const { products: searchResults, loading: searchLoading, searchProducts } = useProductSearch();
   const { products: categoryProducts, loading: categoryLoading, error: categoryError } = useProductsByCategory(filters.category || '1');
+  const { categories, loading: categoriesLoading, error: categoriesError } = useCategories();
 
   // Estado para productos mostrados
   const [displayProducts, setDisplayProducts] = useState(allProducts);
@@ -39,7 +40,7 @@ const ProductCatalog: React.FC = () => {
   const resetFilters = () => {
     setFilters({
       category: '1',
-      sortBy: 'name-asc',
+      sortBy: 'default',
       searchTerm: ''
     });
   };
@@ -121,6 +122,7 @@ const ProductCatalog: React.FC = () => {
               filters={filters}
               onFilterChange={updateFilter}
               onResetFilters={resetFilters}
+              categories={categories}
             />
             
             <ProductGrid

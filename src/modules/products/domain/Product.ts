@@ -42,6 +42,7 @@ export interface ProductRepository {
   getById(id: number): Promise<Product | null>;
   getByCategory(category: string): Promise<Product[]>;
   search(term: string): Promise<Product[]>;
+  getCategories(): Promise<string[]>;
 }
 
 export interface CartRepository {

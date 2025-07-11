@@ -126,10 +126,33 @@ export const useProductsByCategory = (category: string) => {
     fetchProductsByCategory();
   }, [fetchProductsByCategory]);
 
-  return {
-    products,
-    loading,
-    error,
-    refetch: fetchProductsByCategory
-  };
+  return { products, loading, error, refetch: fetchProductsByCategory };
+};
+
+// Hook para obtener categorías
+export const useCategories = () => {
+  const [categories, setCategories] = useState<string[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchCategories = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const data = await apiProductService.getCategories();
+      console.log(data)
+      setCategories(data);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Error desconocido');
+      setCategories([]);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]);
+
+  return { categories, loading, error, refetch: fetchCategories };
 };

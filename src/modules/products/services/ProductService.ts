@@ -1,7 +1,5 @@
 import axios, { type AxiosResponse } from 'axios';
 import type { Product, ProductFilter } from '../domain/Product';
-import { productRepository } from '../infrastructure/ProductRepository';
-import { SORT_OPTIONS } from '../infrastructure/ProductRepository';
 
 // Configuración de la API
 const API_BASE_URL = 'http://localhost:8091/v1';
@@ -68,31 +66,19 @@ export class ProductService {
   }
 
   async getAllProducts(): Promise<Product[]> {
-    if (this.useApi) {
       return await this.getCatalogProductsFromApi();
-    }
-    return await productRepository.getAll();
   }
 
   async getProductById(id: number): Promise<Product | null> {
-    if (this.useApi) {
       return await this.getProductByIdFromApi(id);
-    }
-    return await productRepository.getById(id);
   }
 
   async getProductsByCategory(category: string): Promise<Product[]> {
-    if (this.useApi) {
       return await this.getProductsByCategoryFromApi(category);
-    }
-    return await productRepository.getByCategory(category);
   }
 
   async searchProducts(term: string): Promise<Product[]> {
-    if (this.useApi) {
       return await this.searchProductsFromApi(term);
-    }
-    return await productRepository.search(term);
   }
 
   // Métodos específicos para API
@@ -217,7 +203,32 @@ export class ProductService {
     }
   }
 
-  getSortOptions() {
-    return SORT_OPTIONS;
+  // Método para obtener categorías
+  async getCategories(): Promise<string[]> {
+      return await this.getCategoriesFromApi();
+  }
+
+  async getCategoriesFromApi(): Promise<string[]> {
+    try {
+      interface CategoryResponse {
+        categoryId: number;
+        name: string;
+        description: string;
+      }
+      
+      const response: AxiosResponse<CategoryResponse[]> = await apiClient.get('/catalog/categories');
+      
+      if (response.status === 200 && response.data && Array.isArray(response.data)) {
+        // Extraer solo los nombres de las categorías y agregar "Todos" al inicio
+        const categoryNames = response.data.map(category => category.name);
+        return ['Todos', ...categoryNames];
+      }
+      
+      return ['Todos', 'Lácteos', 'Carnes y Embutidos', 'Frutas', 'Verduras', 'Panadería', 'Snacks y Galletas', 'Bebidas', 'Licores', 'Despensa', 'Congelados', 'Limpieza y Hogar'];
+    } catch (error) {
+      console.error('Error al obtener categorías:', error);
+      // En caso de error, devolver categorías por defecto
+      return ['Todos', 'Lácteos', 'Carnes y Embutidos', 'Frutas', 'Verduras', 'Panadería', 'Snacks y Galletas', 'Bebidas', 'Licores', 'Despensa', 'Congelados', 'Limpieza y Hogar'];
+    }
   }
 }

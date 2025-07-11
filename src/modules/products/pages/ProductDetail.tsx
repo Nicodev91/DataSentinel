@@ -1,48 +1,37 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import type { Product } from '../domain/Product';
 import { useShoppingCart } from '../../shopping-cart';
+import { useProduct } from '../hooks/useProductApi';
 // Header import removed - dashboard components deleted
 
 const ProductDetail: React.FC = () => {
-  // const { id } = useParams<{ id: string }>();
+  const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [quantity, setQuantity] = useState(1);
   const { handleAddToCart } = useShoppingCart();
   
-  // TODO: Replace with actual product fetching from repository
-  // Temporarily using mock data until proper implementation
-  const product: Product | null = {
-    productId: 1,
-    name: 'Producto de ejemplo',
-    price: 1500,
-    stock: 10,
-    description: 'Producto de alta calidad disponible en Supermercado San Nicolás. Ideal para tu hogar y familia.',
-    categoryId: 1,
-    imageUrl: '/placeholder-product.jpg',
-    rutSupplier: '12345678-9',
-    status: true,
-    supplier: {
-      rut: '12345678-9',
-      name: 'Proveedor Ejemplo',
-      address: 'Dirección del proveedor'
-    },
-    category: {
-      categoryId: 1,
-      name: 'Ejemplo',
-      description: 'Categoría de ejemplo'
-    },
-    // Campos de compatibilidad
-    id: 1,
-    image: '/placeholder-product.jpg',
-    isNew: false
-  };
+  const productId = id ? parseInt(id, 10) : 0;
+  const { product, loading, error } = useProduct(productId);
   
-  if (!product) {
+  if (loading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-gray-800 mb-4">Producto no encontrado</h1>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Cargando producto...</p>
+        </div>
+      </div>
+    );
+  }
+  
+  if (error || !product) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-800 mb-4">
+            {error || 'Producto no encontrado'}
+          </h1>
           <button 
             onClick={() => navigate('/catalog')}
             className="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700 transition"
@@ -82,7 +71,7 @@ const ProductDetail: React.FC = () => {
             {/* Imagen del producto */}
             <div className="flex justify-center items-center bg-gray-50 rounded-lg p-8">
               <img 
-                src={product.image || product.imageUrl || '/placeholder-product.jpg'} 
+                src={product.imageUrl || product.image || '/placeholder-product.jpg'} 
                 alt={product.name}
                 className="max-w-full max-h-96 object-contain"
               />
@@ -96,6 +85,16 @@ const ProductDetail: React.FC = () => {
                   Nuevo
                 </span>
               )}
+              
+              {/* Stock disponible */}
+              <div className="flex items-center space-x-2">
+                <span className="text-sm text-gray-500">Stock:</span>
+                <span className={`text-sm px-2 py-1 rounded ${
+                  product.stock > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
+                }`}>
+                  {product.stock > 0 ? `${product.stock} disponibles` : 'Agotado'}
+                </span>
+              </div>
               
               {/* Nombre del producto */}
               <h1 className="text-3xl font-bold text-gray-800">{product.name}</h1>
@@ -129,8 +128,9 @@ const ProductDetail: React.FC = () => {
                     value={quantity}
                     onChange={(e) => setQuantity(Number(e.target.value))}
                     className="border border-gray-300 rounded-lg px-4 py-2 text-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+                    disabled={product.stock === 0}
                   >
-                    {Array.from({ length: 10 }, (_, i) => i + 1).map(num => (
+                    {Array.from({ length: Math.min(product.stock || 1, 10) }, (_, i) => i + 1).map(num => (
                       <option key={num} value={num}>{num}</option>
                     ))}
                   </select>
@@ -138,9 +138,17 @@ const ProductDetail: React.FC = () => {
                 
                 <button
                   onClick={handleAddToCartClick}
-                  className="w-full bg-green-600 text-white text-lg font-semibold py-3 px-6 rounded-lg hover:bg-green-700 transition-colors"
+                  disabled={product.stock === 0}
+                  className={`w-full text-lg font-semibold py-3 px-6 rounded-lg transition-colors ${
+                    product.stock === 0 
+                      ? 'bg-gray-400 text-gray-600 cursor-not-allowed' 
+                      : 'bg-green-600 text-white hover:bg-green-700'
+                  }`}
                 >
-                  Agregar al carrito - ${(product.price * quantity).toLocaleString()} CLP
+                  {product.stock === 0 
+                    ? 'Producto agotado' 
+                    : `Agregar al carrito - $${(product.price * quantity).toLocaleString()} CLP`
+                  }
                 </button>
                 
                 {/* Botón de WhatsApp directo */}

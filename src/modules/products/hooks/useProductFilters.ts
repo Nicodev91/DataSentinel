@@ -1,10 +1,9 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useEffect, useState } from 'react';
 import type { Product, ProductFilter } from '../domain/Product';
 import { ProductService } from '../services/ProductService';
 
 // Instancia del servicio para datos mock
 const productService = new ProductService(false);
-import { CATEGORIES } from '../infrastructure/ProductRepository';
 
 export const useProductFilters = () => {
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
@@ -68,8 +67,6 @@ export const useProductFilters = () => {
     });
   };
 
-  const getCategories = () => CATEGORIES;
-  const getSortOptions = () => productService.getSortOptions();
 
   return {
     products: filteredProducts,
@@ -78,7 +75,5 @@ export const useProductFilters = () => {
     error,
     updateFilter,
     resetFilters,
-    getCategories,
-    getSortOptions
   };
 };

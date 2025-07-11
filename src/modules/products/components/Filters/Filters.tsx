@@ -1,14 +1,15 @@
 import React from 'react';
 import type { ProductFilter } from '../../domain/Product';
-import { CATEGORIES, SORT_OPTIONS } from '../../index';
+import { SORT_OPTIONS } from '../../infrastructure/ProductRepository';
 
 interface FiltersProps {
   filters: ProductFilter;
   onFilterChange: (key: keyof ProductFilter, value: string) => void;
   onResetFilters: () => void;
+  categories?: string[];
 }
 
-const Filters: React.FC<FiltersProps> = ({ filters, onFilterChange, onResetFilters }) => {
+const Filters: React.FC<FiltersProps> = ({ filters, onFilterChange, onResetFilters, categories = [] }) => {
   return (
     <div className="bg-white p-4 rounded-lg shadow-sm border mb-6">
       {/* Búsqueda y ordenamiento - Mobile */}
@@ -34,7 +35,7 @@ const Filters: React.FC<FiltersProps> = ({ filters, onFilterChange, onResetFilte
       {/* Categorías */}
       <div className="mb-4">
         <div className="flex gap-1 md:gap-2 flex-wrap">
-          {CATEGORIES.map(cat => (
+          {categories.map(cat => (
             <button
               key={cat}
               className={`px-2 md:px-4 py-1 md:py-2 rounded-full border text-xs md:text-sm font-medium transition ${filters.category === cat ? 'bg-green-600 text-white' : 'bg-white text-gray-700 border-gray-300 hover:bg-green-100'}`}
