@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../auth';
 import type { CartItem } from '../../../shopping-cart';
 
@@ -9,6 +10,7 @@ interface ShoppingCartProps {
 
 const ShoppingCart: React.FC<ShoppingCartProps> = ({ cart, onRemoveFromCart }) => {
   const { isClient } = useAuth();
+  const navigate = useNavigate();
   
   const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
   const discount = isClient ? subtotal * 0.05 : 0;
@@ -34,7 +36,7 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({ cart, onRemoveFromCart }) =
                   Eliminar
                 </button>
               </div>
-              <span className="font-medium">${(item.price * item.quantity).toLocaleString()} CLP</span>
+              <span className="font-medium">${(item.price * item.quantity).toLocaleString('es-CL')} CLP</span>
             </li>
           ))}
         </ul>
@@ -42,16 +44,16 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({ cart, onRemoveFromCart }) =
       
       <div className="mt-4 space-y-1 text-right">
         <div className="text-gray-600 text-sm md:text-base">
-          Subtotal: ${subtotal.toLocaleString()} CLP
+          Subtotal: ${subtotal.toLocaleString('es-CL')} CLP
         </div>
         {discount > 0 && (
           <div className="text-green-600 font-medium text-sm md:text-base">
-            Descuento cliente (5%): -${discount.toLocaleString()} CLP
+            Descuento cliente (5%): -${discount.toLocaleString('es-CL')} CLP
           </div>
         )}
         {shippingCost > 0 && (
           <div className="text-orange-600 font-medium text-sm md:text-base">
-            Envío: ${shippingCost.toLocaleString()} CLP
+            Envío: ${shippingCost.toLocaleString('es-CL')} CLP
           </div>
         )}
         {shippingCost === 0 && subtotal > 0 && (
@@ -60,27 +62,18 @@ const ShoppingCart: React.FC<ShoppingCartProps> = ({ cart, onRemoveFromCart }) =
           </div>
         )}
         <div className="text-lg font-bold border-t pt-2">
-          Total: ${total.toLocaleString()} CLP
+          Total: ${total.toLocaleString('es-CL')} CLP
         </div>
       </div>
       
       {cart.length > 0 && (
-        <div className="w-full flex justify-center md:justify-end mt-4"> 
-          <a
-            href={`https://wa.me/56948853814?text=${encodeURIComponent(
-              `Hola, quiero comprar:\n` +
-              cart.map(item => `- ${item.name} x${item.quantity} (${(item.price * item.quantity).toLocaleString()} CLP)`).join('\n') +
-              `\nSubtotal: ${subtotal.toLocaleString()} CLP` +
-              (discount > 0 ? `\nDescuento cliente (5%): -${discount.toLocaleString()} CLP` : '') +
-              (shippingCost > 0 ? `\nEnvío: ${shippingCost.toLocaleString()} CLP` : '\n¡Envío gratis!') +
-              `\nTotal: ${total.toLocaleString()} CLP`
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded transition w-full md:w-auto text-center"
+        <div className="w-full flex justify-center mt-4">
+          <button
+            onClick={() => navigate('/cart')}
+            className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded transition w-full text-center"
           >
             Comprar
-          </a>
+          </button>
         </div>
       )}
     </div>

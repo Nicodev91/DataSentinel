@@ -41,7 +41,7 @@ const ProductCard: React.FC<ProductCardProps> = ({
         
         <div className="flex justify-between items-center mb-3">
           <span className="text-lg md:text-xl font-bold text-green-600">
-            ${product.price.toLocaleString()}
+            ${product.price.toLocaleString('es-CL')}
           </span>
         </div>
       </div>

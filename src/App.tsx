@@ -5,6 +5,7 @@ import AdminLayout from './shared/components/layout/AdminLayout/AdminLayout';
 import { AuthProvider, ForgotPassword, LoginPage as Login, RegisterPage as Register, VerificationCode } from './modules/auth';
 import { ProductCatalog } from './modules/core';
 import { ProductDetail } from './modules/products';
+import { PurchaseSummaryPage } from './modules/shopping-cart';
 
 // Componentes temporales para las páginas que aún no existen
 const TemporaryPage = ({ title }: { title: string }) => (
@@ -46,6 +47,9 @@ function App() {
           
           {/* Product detail - Accesible para usuarios autenticados */}
           <Route path="/product/:id" element={<ProductDetail />} />
+          
+          {/* Purchase summary - Accesible para todos los usuarios */}
+          <Route path="/cart" element={<PurchaseSummaryPage />} />
         </Routes>
       </Router>
     </AuthProvider>

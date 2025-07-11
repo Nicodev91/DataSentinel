@@ -108,7 +108,7 @@ const ProductDetail: React.FC = () => {
               
               {/* Precio */}
               <div className="text-4xl font-bold text-green-700">
-                ${product.price.toLocaleString()} CLP
+                ${product.price.toLocaleString('es-CL')} CLP
               </div>
               
               {/* Descripción */}
@@ -146,14 +146,14 @@ const ProductDetail: React.FC = () => {
                 >
                   {product.stock === 0 
                     ? 'Producto agotado' 
-                    : `Agregar al carrito - $${(product.price * quantity).toLocaleString()} CLP`
+                    : `Agregar al carrito - $${(product.price * quantity).toLocaleString('es-CL')} CLP`
                   }
                 </button>
                 
                 {/* Botón de WhatsApp directo */}
                 <a
                   href={`https://wa.me/56948853814?text=${encodeURIComponent(
-                    `Hola, quiero comprar:\n- ${product.name} x${quantity} (${(product.price * quantity).toLocaleString()} CLP)`
+                    `Hola, quiero comprar:\n- ${product.name} x${quantity} (${(product.price * quantity).toLocaleString('es-CL')} CLP)`
                   )}`}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -187,7 +187,7 @@ const ProductDetail: React.FC = () => {
                     {relatedProduct.name}
                   </h3>
                   <p className="text-green-700 font-bold">
-                    ${relatedProduct.price.toLocaleString()} CLP
+                    ${relatedProduct.price.toLocaleString('es-CL')} CLP
                   </p>
                 </div>
               ))
