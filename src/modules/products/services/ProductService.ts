@@ -1,6 +1,6 @@
 import axios, { type AxiosResponse } from 'axios';
 import type { Product, ProductFilter } from '../domain/Product';
-import { config, getApiUrl } from '../../../shared/utils/config';
+import { config } from '../../../shared/utils/config';
 
 // Crear instancia de axios con configuración dinámica
 const apiClient = axios.create({
